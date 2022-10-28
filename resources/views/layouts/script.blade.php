@@ -17,6 +17,7 @@
 <script src="{{ url('/') }}/js/jquery.js"></script> 
 <script src="{{ url('/') }}/js/popper.min.js"></script>
 <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
+<script src="{{ url('/') }}/js/jquery-ui.min.js"></script> 
 <!--Revolution Slider-->
 <script src="{{ url('/') }}/plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
 <script src="{{ url('/') }}/plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
@@ -35,4 +36,5 @@
 <script src="{{ url('/') }}/js/owl.js"></script>
 <script src="{{ url('/') }}/js/wow.js"></script>
 <script src="{{ url('/') }}/js/appear.js"></script>
+<script src="{{ url('/') }}/js/sticky_sidebar.min.js"></script>
 <script src="{{ url('/') }}/js/script.js"></script>

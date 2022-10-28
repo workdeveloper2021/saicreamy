@@ -1,7 +1,7 @@
 @extends('layouts.main')
  <!--Banner Start-->
 @section('content');
- <!--Main Slider-->
+ <!--Main Slider--> 
     <section class="main-slider">
         <div class="slider_wave"></div>
         <div class="rev_slider_wrapper fullwidthbanner-container"  id="rev_slider_one_wrapper" data-source="gallery">
