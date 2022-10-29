@@ -14,6 +14,7 @@
     </svg>
     <span class="fa fa-angle-up"></span>
 </div>
+
 <script src="{{ url('/') }}/js/jquery.js"></script> 
 <script src="{{ url('/') }}/js/popper.min.js"></script>
 <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
@@ -36,5 +37,8 @@
 <script src="{{ url('/') }}/js/owl.js"></script>
 <script src="{{ url('/') }}/js/wow.js"></script>
 <script src="{{ url('/') }}/js/appear.js"></script>
+<script src="{{ url('/') }}/js/select2.min.js"></script>
 <script src="{{ url('/') }}/js/sticky_sidebar.min.js"></script>
 <script src="{{ url('/') }}/js/script.js"></script>
+
+

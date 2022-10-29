@@ -28,7 +28,7 @@
         <!-- end page title -->
 
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
                        
@@ -42,7 +42,7 @@
                                 </ul>
                             </div>
                         @endif
-                         {!! Form::open(array('route' => 'vector.store', 'method'=>'POST','enctype' => 'multipart/form-data')) !!}
+                         {!! Form::open(array('route' => 'product.store', 'method'=>'POST','enctype' => 'multipart/form-data')) !!}
                         <div class="row">
                            <div class="col-md-6">
                                 <div class="mb-3">
@@ -50,6 +50,15 @@
                                         <label  class="form-label">Title</label>
                                         {!! Form::text('title', null, array('placeholder' => 'Name','class' => 'form-control','required' =>'required')) !!}
                                     </div>
+                                </div>
+                            </div> 
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                <div class="form-group">
+                                    <label>Category:</label>
+                                    {!! Form::select('category_id', $category,null, array('class' => 'form-control')) !!}
+                                </div>
                                 </div>
                             </div>   
 
@@ -62,83 +71,37 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 m-0">
-                                <div class="mb-3">
-                                     <label  class="form-label">Size</label>
-                                     {!! Form::text('size[]', null, array('placeholder' => 'for more add press Tab','id'=>'size','class' => 'form-control','required' =>'required','data-role'=>"tagsinput")) !!}
-                                </div>
-                            </div>
-                           
- <div class="col-md-12 m-0">
-                                <div class="mb-3">
-                                     <label  class="form-label">Color</label>
-                                     {!! Form::text('color[]', null, array('placeholder' => 'for more add press Tab','id'=>'color','class' => 'form-control','required' =>'required','data-role'=>"tagsinput")) !!}
-                                </div>
-                            </div>
+
                             <div class="col-md-4">
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <strong>Image:</strong>
+                                        <label>Image:</label>
                                         {!! Form::file('image', array('placeholder' => 'image','id' => 'image','class' => 'form-control','accept' =>'image/*','required' =>'required')) !!}
                                     </div>
                                 </div>
-                            </div>  
-                            <div class="col-md-4">
-
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <strong>Banner Image:</strong>
-                                        {!! Form::file('banner', array('placeholder' => 'banner image','id' => 'image','class' => 'form-control','accept' =>'image/*')) !!}
-                                    </div>
-                                </div>
-                            </div>  
-
-                             <div class="col-md-4">
-
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <strong>Video:</strong>
-                                        {!! Form::file('video', array('placeholder' => 'image','id' => 'image','class' => 'form-control','accept' =>'image/*','required' =>'required')) !!}
-                                    </div>
-                                </div>
                             </div>    
-                               
                             <div class="col-md-12 m-0">
                                 <div class="mb-3">
                                     <div class="form-group">
 
-                                        <label  class="form-label"> Video Description</label>
-                                        {!! Form::textarea('v_description', null, array('placeholder' => 'Video Description','class' => 'form-control','id'=> 'description','value'=>'')) !!}
+                                        <label  class="form-label">Short Description</label>
+                                        {!! Form::textarea('s_description', null, array('placeholder' => 'Long Description','class' => 'form-control','value'=>'')) !!}
                                     </div>
                                     
                                 </div>
                             </div>    
-
+   
                             <div class="col-md-12 m-0">
                                 <div class="mb-3">
                                     <div class="form-group">
 
-                                        <label  class="form-label"> Features </label>
-                                       
-                                        <table class="table table-bordered" id="dynamicAddRemove">
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" name="ftitle[]" placeholder="Enter subject" class="form-control" />
-                                            </td>
-                                            <td><textarea type="text" name="fdescription[]" placeholder="Enter subject" class="form-control" ></textarea>
-                                            </td>
-                                            <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add Subject</button></td>
-                                        </tr>
-                                    </table>
+                                        <label  class="form-label">Long Description</label>
+                                        {!! Form::textarea('l_description', null, array('placeholder' => 'Long Description','class' => 'form-control','id'=> 'description','value'=>'')) !!}
                                     </div>
+                                    
                                 </div>
-                            </div>      
-                            
+                            </div>    
                             <div class="col-md-3 m-0">
                                 <div class="mb-3">
                                     <div class="form-group">
@@ -173,16 +136,6 @@
     
 $("#size").tagsinput('items');
 </script>
-<script type="text/javascript">
-    var i = 0;
-    $("#dynamic-ar").click(function () {
-        ++i;
-        $("#dynamicAddRemove").append('<tr><td><input type="text" name="ftitle[]" placeholder="Enter subject" class="form-control" /></td><td><textarea type="text" name="fdescription[]" placeholder="Enter subject" class="form-control" ></textarea></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
-            );
-    });
-    $(document).on('click', '.remove-input-field', function () {
-        $(this).parents('tr').remove();
-    });
 </script>
  <script>
         CKEDITOR.replace( 'description' );

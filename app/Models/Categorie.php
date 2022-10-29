@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Font extends Model
+class Categorie extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,6 @@ class Font extends Model
      * @var array
      */
     protected $fillable = [
-        'name','price'
+        'name', 'status', 'category_id'
     ];
 }

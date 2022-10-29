@@ -7,7 +7,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0 font-size-18">Font</h4>
+                                    <h4 class="mb-sm-0 font-size-18">Product</h4>
 
 
                                 </div>
@@ -20,14 +20,14 @@
                                 <div class="card">
                                     <div class="card-body">
         
-                                        <h4 class="card-title">Font</h4>
+                                        <h4 class="card-title">Product</h4>
                                         <p class="card-title-desc"> @if (\Session::has('success'))
                                             <div class="alert alert-success">
                                                 <p>{{ \Session::get('success') }}</p>
                                             </div>
                                         @endif
                                         <span class="float-right">
-                                            <a class="btn btn-primary" href="{{ route('font.create') }}">Create</a>
+                                            <a class="btn btn-primary" href="{{ route('product.create') }}">Create</a>
                                         </span>
                                         </p>
         
@@ -35,8 +35,9 @@
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Name</th>
+                                                <th>Title</th>
                                                 <th>Price</th>
+                                                <th>Image</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -98,13 +99,14 @@
             responsive: true,
             serverSide: true,
             ajax: {
-                "url": "{{ route('font-list') }}",
+                "url": "{{ route('product-list') }}",
                 "type": "get",
             },
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
+                {data: 'title', name: 'title'},
                 {data: 'price', name: 'price'},
+                {data: 'image', name: 'image'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],

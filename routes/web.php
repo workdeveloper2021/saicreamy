@@ -3,17 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\WalldecalController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\VectorController;
-use App\Http\Controllers\WallpaperController;
-use App\Http\Controllers\FontController;
-use App\Http\Controllers\PrintController;
-use App\Http\Controllers\BabycardController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ProductController;
+
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 /*
 /*
 /*
@@ -31,10 +29,13 @@ use App\Http\Controllers\UserController;
 Auth::routes();
 
 Route::get('/home', [WebController::class, 'index'])->name('home');
-Route::group(['middleware' => 'auth'],function () {
-Route::get('/dashboard', [WebController::class, 'dashboard'])->name('dashboard');
 
-});
+Route::get('/blog', [WebController::class, 'blog']);
+Route::get('/blog-single/{id}', [WebController::class, 'blogDetails']);
+
+Route::get('/about-us', [WebController::class, 'about']);
+Route::get('/shop', [WebController::class, 'shop']);
+Route::get('/product/{id}', [WebController::class, 'product']);
 
 Route::get('/', [WebController::class, 'index'])->name('home');
 
@@ -43,7 +44,6 @@ Route::get('/Wedding', function (){ return view ('index-3'); });
 Route::get('/Coffee', function (){ return view ('index-4'); });
 Route::get('/Ice-Cream', function (){ return view ('index-5'); });
 Route::get('/Macaron', function (){ return view ('index-6'); });
-Route::get('/Shop', function (){ return view ('index-7'); });
 Route::get('/Landing', function (){ return view ('index-8'); });
 
 
@@ -76,10 +76,8 @@ Route::get('/blog-single-4', function (){ return view ('blog-single-4'); });
 Route::get('/blog-single-5', function (){ return view ('blog-single-5'); });
 
 
-Route::get('/shop', function (){ return view ('shop'); });
 Route::get('/shopping-cart', function (){ return view ('shopping-cart'); });
 Route::get('/checkout', function (){ return view ('checkout'); });
-Route::get('/login', function (){ return view ('login'); });
 Route::get('/contact', function (){ return view ('contact'); });
 
 Route::resource('cart', CartController::class);
@@ -92,25 +90,15 @@ Route::get('state-list/', [WebController::class, 'stateList'])->name('state-list
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::group(['prefix' => '/admin','middleware' => 'auth'],function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+   
+    Route::resource('blog', BlogController::class);
+    Route::get('blog-List/', [BlogController::class, 'blogList'])->name('blog-list');
     
-    Route::resource('walldecal', WalldecalController::class);
-    Route::get('walldecal-List/', [WalldecalController::class, 'walldecalList'])->name('walldecal-list');
-    
-    Route::resource('vector', VectorController::class);
-    Route::get('vector-List/', [VectorController::class, 'vectorList'])->name('vector-list');
+    Route::resource('category', CategoryController::class);
+    Route::get('category-List/', [CategoryController::class, 'categoryList'])->name('category-list');
 
-    Route::resource('wallpaper', WallpaperController::class);
-    Route::get('wallpaper-List/', [WallpaperController::class, 'wallpaperList'])->name('wallpaper-list');
-
-    Route::resource('font', FontController::class);
-    Route::get('font-List/', [FontController::class, 'fontList'])->name('font-list');
-
-
-    Route::resource('print', PrintController::class);
-    Route::get('print-List/', [PrintController::class, 'printList'])->name('print-list');
-
-    Route::resource('babycard', BabycardController::class);
-    Route::get('babycard-List/', [BabycardController::class, 'babycardList'])->name('babycard-list');
+    Route::resource('product', ProductController::class);
+    Route::get('product-List/', [ProductController::class, 'productList'])->name('product-list');
 
     Route::post('/orderplace', [OrderController::class, 'orderplace'])->name('orderplace');
      Route::get('order/', [OrderController::class, 'order'])->name('order');

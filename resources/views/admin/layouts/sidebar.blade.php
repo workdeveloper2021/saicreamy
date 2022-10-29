@@ -10,42 +10,22 @@
             </a>
         </li>
         <li>
-            <a href="{{ URL::to('admin/font') }}" class="waves-effect">
+            <a href="{{ URL::to('admin/blog') }}" class="waves-effect">
                 <i class="bx bx-detail"></i>
-                <span key="t-chat">Font</span>
+                <span key="t-chat">Blog</span>
             </a>
         </li>
 
         <li>
-            <a href="{{ URL::to('admin/walldecal') }}" class="waves-effect">
+            <a href="{{ URL::to('admin/category') }}" class="waves-effect">
                 <i class="bx bx-detail"></i>
-                <span key="t-chat">Wall Decals</span>
+                <span key="t-chat">Category</span>
             </a>
         </li>
         <li>
-            <a href="{{ URL::to('admin/vector') }}" class="waves-effect">
+            <a href="{{ URL::to('admin/product') }}" class="waves-effect">
                 <i class="bx bx-detail"></i>
-                <span key="t-chat">Vector Walldecals</span>
-            </a>
-        </li>
-         <li>
-            <a href="{{ URL::to('admin/wallpaper') }}" class="waves-effect">
-                <i class="bx bx-detail"></i>
-                <span key="t-chat">Wallpaper</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ URL::to('admin/print') }}" class="waves-effect">
-                <i class="bx bx-detail"></i>
-                <span key="t-chat">Prints</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ URL::to('admin/babycard') }}" class="waves-effect">
-                <i class="bx bx-detail"></i>
-                <span key="t-chat">Babycard</span>
+                <span key="t-chat">Product</span>
             </a>
         </li>
         <li>

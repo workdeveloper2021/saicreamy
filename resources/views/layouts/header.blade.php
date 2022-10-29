@@ -39,28 +39,17 @@
                     <nav class="main-menu navbar-expand-md navbar-light">
                         <div class="collapse navbar-collapse clearfix" id="navbarSupportedContent">
                             <ul class="navigation menu-left clearfix">
-                                <li class="current dropdown"><a href="{{ url('/')}}">Home</a>
-                                    <ul>
-                                        <li class="current"><a href="{{ url('/')}}">Cakes</a></li>
-                                        <li><a href="{{ url('/Lollipop')}}">Lollipop</a></li>
-                                        <li><a href="{{ url('/Wedding')}}">Wedding</a></li>
-                                        <li><a href="{{ url('/Coffee')}}">Coffee</a></li>
-                                        <li><a href="{{ url('/Ice-Cream')}}">Ice-Cream</a></li>
-                                        <li><a href="{{ url('/Macaron')}}">Macaron</a></li>
-                                        <li><a href="{{ url('/Shop')}}">Shop</a></li>
-                                        <li><a href="{{ url('/Landing')}}">Landing</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="{{ url('/')}}">Home</a></li>
+                                <li><a href="{{ url('/about-us')}}">About Us</a></li>
                                 <li class="dropdown"><a href="{{ url('/about-us')}}">Pages</a>
                                     <ul>
-                                        <li><a href="{{ url('/about-us')}}">About Us</a></li>
                                         <li><a href="{{ url('/our-staff')}}">Our Staff</a></li>
                                         <li><a href="{{ url('/pricing-tables')}}">Pricing Tables</a></li>
                                         <li><a href="{{ url('/content-elements')}}">Content Elements</a></li>
                                         <li><a href="{{ url('/recipes-list')}}">Recipes Grid</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="{{ url('/portfolio-masonry')}}">Portfolio</a>
+                                <!-- <li class="dropdown"><a href="{{ url('/portfolio-masonry')}}">Portfolio</a>
                                     <ul>
                                         <li><a href="{{ url('/portfolio-masonry')}}">Masonry</a></li>
                                         <li><a href="{{ url('/portfolio-masonry-wide')}}">Masonry Wide</a></li>
@@ -71,39 +60,30 @@
                                         <li><a href="{{ url('/portfolio-square')}}">Square</a></li>
                                         <li><a href="{{ url('/portfolio-single')}}">single Post</a></li>
                                     </ul>
-                                </li>
+                                </li> -->
                             </ul>
 
                             <ul class="navigation menu-right clearfix">
-                                <li class="dropdown"><a href="{{ url('/blog-showcase')}}">Blog</a>
-                                    <ul>
-                                        <li><a href="{{ url('/blog-showcase')}}">Checkerboard</a></li>
-                                        <li><a href="{{ url('/blog-standard')}}">Standard</a></li>
-                                        <li><a href="{{ url('/blog-masonry')}}">Masonry</a></li>
-                                        <li><a href="{{ url('/blog-masonry-full-width')}}">Masonry Full Width</a></li>
-                                        <li><a href="{{ url('/blog-two-column')}}">Two Columns Grid</a></li>
-                                        <li><a href="{{ url('/blog-three-column-wide')}}">Three Columns Wide</a></li>
-                                        <li class="dropdown"><a href="#">Post Types</a>
-                                            <ul>
-                                                <li><a href="{{ url('/blog-single')}}">Standard Post</a></li>
-                                                <li><a href="{{ url('/blog-single-2')}}">Gallery Post</a></li>
-                                                <li><a href="{{ url('/blog-single-3')}}">Video Post</a></li>
-                                                <li><a href="{{ url('/blog-single-4')}}">Audio Post</a></li>
-                                                <li><a href="{{ url('/blog-single-5')}}">Quote Post</a></li>
-                                                <li><a href="{{ url('/blog-single-6')}}">Link Post</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown"><a href="{{ url('/shop')}}">Shop</a>
-                                    <ul>
-                                        <li><a href="{{ url('/shop')}}">Shop</a></li>
-                                        <li><a href="{{ url('/shopping-cart')}}">Cart</a></li>
-                                        <li><a href="{{ url('/checkout')}}">Checkout</a></li>
-                                        <li><a href="{{ url('/login')}}">My account</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="{{ url('/blog')}}">Blog</a></li>
+                                <li><a href="{{ url('/shop')}}">Shop</a></li>
+                               
                                 <li><a href="{{ url('/contact')}}">Contacts</a></li>
+                                @auth
+                                 <li>   <a  href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                           Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                </li>      
+                                @endauth
+                                @guest
+                                <li><a href="{{ URL::to('login') }}">Login</a></li>
+                                @endauth 
+                               
                             </ul>
                         </div>
                     </nav>

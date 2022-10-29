@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
-use App\Models\Font;
+use App\Models\Blog;
 use App\Models\User;
 use App\Models\Otherimage;
 use Auth;
@@ -24,7 +24,7 @@ class WebController extends Controller
          }        
             
         } 
-        $this->change_user();
+           $this->change_user();
            return view('index');
     }
          
@@ -44,78 +44,41 @@ class WebController extends Controller
     }
 
 
-    public function walldecals()
+    public function blog()
     { 
-        $product = Product::where('type','vector')->where('status',1)->get();
+        $blog = Blog::where('status',1)->get();
         $this->change_user();
-        return view('vector-walldecals',compact('product'));
+        return view('blog',compact('blog'));
     }
 
 
-    public function walldecals_details($id)
+    public function blogDetails($id)
     {
-        $product = Product::where('id',$id)->first();
-        $images = Otherimage::where(array('product_id'=>$product->id,'type'=>'walldecal'))->get();   
+        $blog = Blog::where('id',$id)->first();
         $this->change_user();
-        return view('vector-walldecals-details',compact('product','images'));
+        return view('blog-single',compact('blog'));
     }
 
 
-    public function decals()
-    {
-        $product = Product::where('type','walldecal')->where('status',1)->get();
-        $this->change_user();
-        return view('wall-decals',compact('product'));
-    }
-
-    public function decals_details($id)
-    {
-        $product = Product::where('id',$id)->first();  
-        $images = Otherimage::where(array('product_id'=>$product->id,'type'=>'walldecal'))->get(); 
-        $this->change_user();      
-        return view('wall-decals-details',compact('product','images'));
-    }
 
  
 
-    public function wallpaper()
+    public function shop()
     {
-        $product = Product::where('type','wallpaper')->where('status',1)->get();
+        $product = Product::where('status',1)->get();
         $this->change_user();
-        return view('wallpaper',compact('product'));
+        return view('shop',compact('product'));
     }
 
-   public function wallpaper_details($id)
+   public function product($id)
     {
-        $product = Product::where('id',$id)->first();  
-        $images = Otherimage::where(array('product_id'=>$product->id,'type'=>'walldecal'))->get();
-        $this->change_user();      
-        return view('wallpaper-details',compact('product','images'));
+        $pro = Product::with('category')->where('id',$id)->first();  
+        $product = Product::where('status',1)->get();
+               
+        $this->change_user();  
+        return view('shop-single',compact('pro','product'));
     }
 
-    public function babycards()
-    {
-        $product = Product::where('type','babycard')->where('status',1)->get();
-        $this->change_user();
-        return view('baby-cards',compact('product'));
-    }
-
-    public function baby_cards_details($id)
-    {
-        $product = Product::where('id',$id)->first();   
-        $images = Otherimage::where(array('product_id'=>$product->id,'type'=>'walldecal'))->get();  
-        $font = Font::where('status',1)->get();
-        $this->change_user();
-        return view('baby-cards-details',compact('product','images','font'));
-    }
-
-    public function prints()
-    {
-        $product = Product::where('type','print')->first(); 
-        $font = Font::where('status',1)->get();
-        $this->change_user(); 
-        return view('prints', compact('product','font'));
-    }
 
     public function dashboard(){
        $user = User::where('id',Auth::user()->id)->first();

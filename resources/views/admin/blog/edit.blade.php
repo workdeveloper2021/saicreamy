@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Create</h4>
+                    <h4 class="mb-sm-0 font-size-18">Update</h4>
 
 
                 </div>
@@ -28,7 +28,7 @@
         <!-- end page title -->
 
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
                        
@@ -42,26 +42,70 @@
                                 </ul>
                             </div>
                         @endif
-                           {!! Form::model($post, ['route' => ['font.update', $post->id], 'method'=>'PATCH','enctype' => 'multipart/form-data']) !!}
+                           {!! Form::model($post, ['route' => ['blog.update', $post->id], 'method'=>'PATCH','enctype' => 'multipart/form-data']) !!}
                         <div class="row">
-                           <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <div class="form-group m-0">
-                                        <label  class="form-label">Name</label>
-                                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','required' =>'required')) !!}
+                                        <label  class="form-label">Title</label>
+                                        {!! Form::text('title', null, array('placeholder' => 'Title','class' => 'form-control','required' =>'required')) !!}
                                     </div>
                                 </div>
-                            </div>   
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-group m-0">
+                                        <label  class="form-label">Write By</label>
+                                        {!! Form::text('writeby', null, array('placeholder' => 'Write By','class' => 'form-control','required' =>'required')) !!}
+                                    </div>
+                                </div>
+                            </div> 
                              <div class="col-md-6">
                                 <div class="mb-3">
                                     <div class="form-group m-0">
-                                        <label  class="form-label">Font Price</label>
-                                        {!! Form::number('price', null, array('placeholder' => 'Price','class' => 'form-control','required' =>'required')) !!}
+                                        <label  class="form-label">Blog Tags</label>
+                                        {!! Form::text('tags', null, array('placeholder' => 'Blog Tags','class' => 'form-control','required' =>'required')) !!}
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-group m-0">
+                                        <label  class="form-label">Linkes</label>
+                                        {!! Form::number('no_of_like', null, array('placeholder' => 'Linkes','class' => 'form-control','required' =>'required')) !!}
                                     </div>
                                 </div>
                             </div>  
 
-                           <div class="col-md-3 m-0">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-group m-0">
+                                        <label  class="form-label">Date</label>
+                                        {!! Form::date('date', null, array('placeholder' => 'Date','class' => 'form-control','required' =>'required')) !!}
+                                    </div>
+                                </div>
+                            </div>  
+                            
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label  class="form-label">Blog Image</label>
+                                        
+                                        {!! Form::file('image', array('placeholder' => ' image','id' => 'image','class' => 'form-control','accept' =>'image/*')) !!}
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <div class="form-group m-0">
+                                        <label  class="form-label">Description</label>
+                                        {!! Form::textarea('description', null, array('placeholder' => 'Description','id'=>'description','class' => 'form-control','required' =>'required')) !!}
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="col-md-3 m-0">
                                 <div class="mb-3">
                                     <div class="form-group">
 
@@ -70,6 +114,8 @@
                                     </div>
                                 </div>
                             </div> 
+
+                              
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Submit</button>

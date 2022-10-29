@@ -7,7 +7,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0 font-size-18">Vector Walldecals</h4>
+                                    <h4 class="mb-sm-0 font-size-18">Blogs</h4>
 
 
                                 </div>
@@ -20,14 +20,14 @@
                                 <div class="card">
                                     <div class="card-body">
         
-                                        <h4 class="card-title">Vector Walldecals</h4>
+                                        <h4 class="card-title">Blogs</h4>
                                         <p class="card-title-desc"> @if (\Session::has('success'))
                                             <div class="alert alert-success">
                                                 <p>{{ \Session::get('success') }}</p>
                                             </div>
                                         @endif
                                         <span class="float-right">
-                                            <a class="btn btn-primary" href="{{ route('vector.create') }}">Create</a>
+                                            <a class="btn btn-primary" href="{{ route('blog.create') }}">Create</a>
                                         </span>
                                         </p>
         
@@ -35,9 +35,11 @@
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Title</th>
-                                                <th>Price</th>
                                                 <th>Image</th>
+                                                <th>Title</th>
+                                                <th>Write By</th>
+                                                <th>Tags</th>
+                                                <th>Likes</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -99,14 +101,16 @@
             responsive: true,
             serverSide: true,
             ajax: {
-                "url": "{{ route('vector-list') }}",
+                "url": "{{ route('blog-list') }}",
                 "type": "get",
             },
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'title', name: 'title'},
-                {data: 'price', name: 'price'},
                 {data: 'image', name: 'image'},
+                {data: 'title', name: 'title'},
+                {data: 'writeby', name: 'writeby'},
+                {data: 'tags', name: 'tags'},
+                {data: 'no_of_like', name: 'no_of_like'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],

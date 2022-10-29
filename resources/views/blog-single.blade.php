@@ -3,7 +3,7 @@
 @section('content');
 
     <!--Page Title-->
-    <section class="page-title" style="background-image:url(images/background/34.jpg)">
+    <section class="page-title" style="background-image:url(<?= url('/') ?>/images/background/34.jpg)">
         <div class="auto-container">
             <h1>Blog Single</h1>
             <ul class="page-breadcrumb">
@@ -26,38 +26,24 @@
                             <div class="inner-box">
                                 <div class="image-column">
                                     <div class="inner-column">
-                                        <figure class="image"><img src="images/resource/blog-1.jpg" alt=""></figure>
-                                        <div class="date">04 <span>Dec</span></div>
+                                        <figure class="image"><img src="{{url('/')}}/{{ $blog->image }}" alt=""></figure>
+                                        <div class="date">{{ date('d',strtotime($blog->date)) }} <span>{{ date('M',strtotime($blog->date)) }}</span></div>
                                     </div>
                                 </div>
                                 <div class="content-column">
                                     <div class="inner-column">
                                         <ul class="post-info">
-                                            <li><span class="icon fa fa-user"></span> by admin</li>
-                                            <li><span class="icon fa fa-heart"></span> 5 Likes</li>
-                                            <li><span class="icon fa fa-bookmark"></span> <a href="#">Cake Pops</a>, <a href="#">Caramels</a>, <a href="#">Toffees</a></li>
+                                            <li><span class="icon fa fa-user"></span> by {{ $blog->writeby }}</li>
+                                            <li><span class="icon fa fa-heart"></span> {{ $blog->no_of_like }} Likes</li>
+                                            <li><span class="icon fa fa-bookmark"></span> {{ $blog->tags }}</li>
                                         </ul>
-                                        <p>Et enim, magna felis vestibulum, ornare massa elit, in nam dignissim nam morbi odio nullam. Rhoncus vitae ligula, mauris nascetur eleifend nonummy. Mauris mattis suscipit, fermentum sed proin vestibulum in diam interdum. Dignissim lobortis fermentum in dui. Elit neque, tincidunt vestibulum, orci urna et fermentum aliquam volutpat. Id sociosqu elit vitae pellentesque sem, id velit vel ante dui proin hymenaeos. Velit ac neque orci, adipiscing taciti turpis euismod augue diam.</p>
-                                        <blockquote>Quisque volutpat vel sapien id luctus. Donec vestibulum efficitur turpis ullamcorper iaculis.</blockquote>
-                                        <p>Mauris sit amet elit sit amet odio iaculis sodales. Aliquam imperdiet dolor vel purus scelerisque, et condimentum nunc tempus. Nunc laoreet nulla sit amet ante vehicula consectetur. Nam cursus ut augue sed iaculis. Sed auctor dui a massa dictum cursus. Nullam eget enim quis velit efficitur malesuada pellentesque nec lacus. Maecenas sagittis porttitor convallis.</p>
+                                     
                                     </div>
                                 </div>
                                 <div class="two-column row">
-                                    <div class="image-column col-lg-6 col-md-12">
-                                        <figure class="image"><img src="images/resource/post-img-2.jpg" alt=""></figure>
-                                    </div>
-                                    <div class="content-column col-lg-6 col-md-12">
-                                        <ul class="list-style-one"> 
-                                            <li>Donec ligula leo, ornare at posuere.</li>
-                                            <li>Donec eu sollicitudin quam, vitae.</li>
-                                            <li>Phasellus ac nulla lacinia, sodales.</li>
-                                            <li>Vestibulum tincidunt felis non lectus.</li>
-                                            <li>Cras sem libero, porta vestibulum in.</li>
-                                            <li>Nam accumsan nulla viverra tincidunt.</li>
-                                        </ul>
-                                    </div>
+                                <?= $blog->description; ?>
+
                                 </div>
-                                <div class="devider"><img src="images/icons/icon-devider-gray.png" alt=""></div>
                             </div>
                         </div>
 
@@ -105,42 +91,42 @@
                     <aside class="sidebar theiaStickySidebar">
                         <div class="sticky-sidebar">
                             <!-- Search -->
-                            <div class="sidebar-widget search-widget">
+                           <!--  <div class="sidebar-widget search-widget">
                                 <form method="post" action="http://html.cwsthemes.com/bellaria/contact.html">
                                     <div class="form-group">
                                         <input type="search" name="search-field" value="" placeholder="Search…" required>
                                         <button type="submit"><span class="icon fa fa-search"></span></button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                             
                             <!-- Gallery Widget -->
-                            <div class="sidebar-widget gallery-widget">
+                           <!--  <div class="sidebar-widget gallery-widget">
                                 <div class="widget-content">
                                     <h3 class="widget-title">Gallery</h3>
                                     <div class="instagram-gallery">
                                         <div class="outer-box clearfix">
-                                            <figure class="image"><a href="images/gallery/2-1.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-2.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-1.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-2.jpg" alt=""></a></figure>
 
-                                            <figure class="image"><a href="images/gallery/2-2.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-1.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-2.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-1.jpg" alt=""></a></figure>
 
-                                            <figure class="image"><a href="images/gallery/2-3.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-3.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-3.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-3.jpg" alt=""></a></figure>
 
-                                            <figure class="image"><a href="images/gallery/2-4.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-4.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-4.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-4.jpg" alt=""></a></figure>
 
-                                            <figure class="image"><a href="images/gallery/2-5.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-5.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-5.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-5.jpg" alt=""></a></figure>
 
-                                            <figure class="image"><a href="images/gallery/2-6.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-6.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-6.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-6.jpg" alt=""></a></figure>
 
-                                            <figure class="image"><a href="images/gallery/2-7.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-7.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-7.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-7.jpg" alt=""></a></figure>
 
-                                            <figure class="image"><a href="images/gallery/2-8.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-8.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-8.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-8.jpg" alt=""></a></figure>
 
-                                            <figure class="image"><a href="images/gallery/2-1.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-9.jpg" alt=""></a></figure>
+                                            <figure class="image"><a href="{{ url('/') }}/images/gallery/2-1.jpg" class="lightbox-image" data-fancybox='instagram'><img src="images/resource/gw-9.jpg" alt=""></a></figure>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Category  Widget -->
                             <div class="sidebar-widget category-widget">

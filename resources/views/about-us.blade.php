@@ -3,7 +3,7 @@
 @section('content');
 
     <!--Page Title-->
-    <section class="page-title" style="background-image:url(images/background/34.jpg)">
+    <section class="page-title" style="background-image:url(<?= url('/') ?>/images/background/34.jpg)">
         <div class="auto-container">
             <h1>About Us</h1>
             <ul class="page-breadcrumb">
@@ -15,7 +15,7 @@
     <!--End Page Title-->
 
     <!-- About Section Two -->
-    <section class="about-section-two alternate" style="background-image: url(images/background/36.jpg);">
+    <section class="about-section-two alternate" style="background-image: url(<?= url('/') ?>/images/background/36.jpg);">
         <div class="auto-container">
             <div class="sec-title text-center">
                 <div class="divider"><img src="images/icons/divider_1.png" alt=""></div>

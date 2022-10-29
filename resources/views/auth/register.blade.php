@@ -1,72 +1,51 @@
 @extends('layouts.main')
  <!--Banner Start-->
 @section('content');
-    <!--slip on all pages start-->
-
-    <div id="slip" style="width: 100%;float: left;">
-
-        <div class="container-fluid">
-
-            <div class="row">
-
-                <div class="col-12">
-
-                    <img style="width:100%;height: auto;" src="{{ URL::to('assets/')}}/images/Whatsappimage.jpeg" alt="">
-
-                </div>
-
-            </div>
-
+<!--Page Title-->
+    <section class="page-title" style="background-image:url(images/background/34.jpg)">
+        <div class="auto-container">
+            <h1>Sign Up</h1>
+            <ul class="page-breadcrumb">
+                <li><a href="{{ url('/')}}">home</a></li>
+                <li>Sign Up</li>
+            </ul>
         </div>
+    </section>
+    <!--End Page Title-->
 
-    </div>
-
-    
-
-    
-
-    <!--slip on all pages end-->
-
-    <!--Sign up  Page Start-->
-
-    <div id="sign_in">
-
-            <div class="container special_class">
-
-            <div class="row">
-
-                <div class="col-12 head">
-
-                    <h2>Register</h2>
-
-                   <form class="login_form" method="POST" action="{{ route('register') }}">
+    <!--Login Section-->
+    <section class="login-section">
+        <div class="auto-container">
+            <!-- Login Form -->
+            <div class="login-form">
+                <h2>Sign Up</h2>
+                <!--Login Form-->
+                <form class="login_form" method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <label>Name*</label><br>
+                    <div class="form-group">
+                        <label>Name *</label>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
-                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                       
-                       <!--  <label>Mobile Number*</label><br>
-
-                        <input type="tel" placeholder="Mobile Number" minlength="10" maxlength="10"  onkeypress="return onlyNumberKey(event)" name="contact" id="contact"><br> -->
-
-                        <label>Email Address*</label><br>
-
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label>Email address *</label>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        <label>Password*</label><br>
-
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Password *</label>
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
@@ -74,27 +53,25 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                        <label>Confirm Password*</label><br>
+                    </div>
 
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                       <button type="submit">Sign Up</button>
-                        
-                        <label>Already log in?</label>
+                    <div class="form-group">
+                        <label>Confirm Password *</label>
+                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                       
+                    </div>
+                    
+                    <div class="form-group">
+                        <input class="theme-btn" type="submit" name="submit-form" value="Sing Up">
+                    </div>
 
-                        <a href="{{ route('login')}}" > Sign up</a>
-
-                    </form>
-
-                </div>
-
+                    <div class="form-group pass">
+                        <a href="{{ url('/login') }}" class="psw">You have already account?</a>
+                    </div>
+                </form>
             </div>
-
+            <!--End Login Form -->  
         </div>
-
-    </div>
-
-    <!--Sign up  Page Start-->
-
-        
-
+    </section>
+    <!--End Login Section-->
 @endsection
