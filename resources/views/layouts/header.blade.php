@@ -31,7 +31,7 @@
         <!-- Main box -->
         <div class="main-box">
             <div class="menu-box">
-                <div class="logo"><a href="index.html"><img src="{{ url('/') }}/images/logo.png" alt="" title=""></a></div>
+                <div class="logo"><a href="{{url('/')}}"><img src="{{ url('/') }}/images/logo.png" alt="" title=""></a></div>
 
                 <!--Nav Box-->
                 <div class="nav-outer clearfix">
@@ -104,7 +104,7 @@
                             $cart =  DB::table('carts')->where('user_id',$user_id)->get();
 
                              ?>
-                            <a href="shopping-cart.html"><i class="icon flaticon-commerce"></i> <span class="count">{{count($cart)}}</span></a>
+                            <a href="{{url('cart')}}"><i class="icon flaticon-commerce"></i> <span class="count">{{count($cart)}}</span></a>
 
                             <div class="shopping-cart" >
                                <ul class="shopping-cart-items">
@@ -175,7 +175,7 @@
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="{{ url('/') }}/images/logo-small.png" alt="" title=""></a></div>
+            <div class="logo"><a href="{{url('/')}}"><img src="{{ url('/') }}/images/logo-small.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
@@ -186,7 +186,7 @@
         <!-- Mobile Menu  -->
         <div class="mobile-menu">            
             <nav class="menu-box">
-                <div class="nav-logo"><a href="index.html"><img src="{{ url('/') }}/images/logo-small.png" alt="" title=""></a></div> 
+                <div class="nav-logo"><a href="{{url('/')}}"><img src="{{ url('/') }}/images/logo-small.png" alt="" title=""></a></div> 
                 <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
             </nav>
         </div><!-- End Mobile Menu -->

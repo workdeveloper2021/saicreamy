@@ -29,6 +29,11 @@ class WebController extends Controller
     }
          
     public function change_user(){
+        if (Cookie::get('cart') == false) {           
+           $time=60*24*14;
+           $value = time().rand('00','99'); 
+           Cookie::queue('cart', $value, $time); 
+        }
         if(Auth::user()){
           if (Cookie::get('cart')) {
                $user_id = Cookie::get('cart');
