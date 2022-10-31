@@ -75,13 +75,13 @@ Route::get('/blog-single-3', function (){ return view ('blog-single-3'); });
 Route::get('/blog-single-4', function (){ return view ('blog-single-4'); });
 Route::get('/blog-single-5', function (){ return view ('blog-single-5'); });
 
-
-Route::get('/shopping-cart', function (){ return view ('shopping-cart'); });
-Route::get('/checkout', function (){ return view ('checkout'); });
+ 
 Route::get('/contact', function (){ return view ('contact'); });
 
-Route::resource('cart', CartController::class);
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::get('/cartstore', [CartController::class, 'store'])->name('cart.store');
 Route::get('/getcart', [CartController::class, 'getcart'])->name('getcart');
+Route::get('/getcart2', [CartController::class, 'getcart2'])->name('getcart2');
 Route::get('/deletecart', [CartController::class, 'deletecart'])->name('deletecart');
 
 Route::get('/deletecart/{id}', [CartController::class, 'delete_cart']);

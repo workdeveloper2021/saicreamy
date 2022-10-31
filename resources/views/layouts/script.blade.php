@@ -41,4 +41,85 @@
 <script src="{{ url('/') }}/js/sticky_sidebar.min.js"></script>
 <script src="{{ url('/') }}/js/script.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>
 
+<script>
+  @if(Session::has('success'))
+  toastr.options =
+  {
+    "closeButton" : true,
+    "progressBar" : true
+  }
+        toastr.success("{{ session('success') }}");
+  @endif
+
+  @if(Session::has('error'))
+  toastr.options =
+  {
+    "closeButton" : true,
+    "progressBar" : true
+  }
+        toastr.error("{{ session('error') }}");
+  @endif
+
+</script>
+<script type="text/javascript">
+    $(document).on('click','.cart-item',function(e){
+        e.preventDefault();
+        var product_id = $(this).attr('product_id');
+        var submit = $(this).attr('submit');
+        var qty = $('#qty'+product_id).val();
+        $.ajax({
+            url:"{{ route('cart.store')}}",
+            type:'get',
+            data:{product_id:product_id,qty:qty,submit:submit},
+            success:function(res){
+               if(res == 'cart'){
+                toastr.options =
+                  {
+                    "closeButton" : true,
+                    "progressBar" : true
+                  }
+                 toastr.success("Add To Cart Successfully");
+               }
+                getcart();
+            }
+        })
+       // getcart();
+    })
+    $(document).on('click','.remove-to-cart',function(e){
+        e.preventDefault();
+        var id = $(this).attr('id');
+         $.ajax({
+            url:"{{ route('deletecart') }}",
+            type:'get',
+            data:{id:id},
+            success:function(res){
+               getcart();
+            }
+        })
+       
+    })
+
+    function getcart(){
+         $.ajax({
+            url:"{{ route('getcart') }}",
+            type:'get',
+            success:function(res){
+               $('#cartshow').html(res);
+            }
+        })
+         getcart2();
+    }
+
+
+     function getcart2(){
+         $.ajax({
+            url:"{{ route('getcart2') }}",
+            type:'get',
+            success:function(res){
+               $('#cartshow2').html(res);
+            }
+        })
+    }
+</script>

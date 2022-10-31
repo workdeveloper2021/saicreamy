@@ -26,9 +26,7 @@
                                 <p>{{ \Session::get('success') }}</p>
                             </div>
                         @endif
-                      <!--   <span class="float-right">
-                            <a class="btn btn-primary" href="{{ route('print.create') }}">Create</a>
-                        </span> -->
+                     
                         </p>
 
                         <table id="exportexample1" class="table table-bordered dt-responsive  nowrap w-100">

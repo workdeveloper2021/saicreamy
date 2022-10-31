@@ -133,12 +133,11 @@
                                 <div class="widget-content">
                                     <h3 class="widget-title">Categories</h3>
                                     <ul class="categories-list">
-                                        <li><a href="#">Cake</a></li>
-                                        <li><a href="#">Coffee Cake</a></li>
-                                        <li><a href="#">Ice Cream</a></li>
-                                        <li><a href="#">Lollipop</a></li>
-                                        <li><a href="#">Macaroons</a></li>
-                                        <li><a href="#">Uncategorized</a></li>
+                                        @if($category)
+                                        @foreach ($category as $key => $catt)
+                                        <li><a href="{{url('shop')}}?category={{$catt->id}}">{{$catt->name}}</a></li>
+                                        @endforeach
+                                        @endif
                                     </ul>
                                 </div>
                             </div>

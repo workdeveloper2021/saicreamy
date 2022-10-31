@@ -20,15 +20,15 @@
                                 <div class="card">
                                     <div class="card-body">
         
-                                        <h4 class="card-title">Prints</h4>
+                                        <h4 class="card-title">Category</h4>
                                         <p class="card-title-desc"> @if (\Session::has('success'))
                                             <div class="alert alert-success">
                                                 <p>{{ \Session::get('success') }}</p>
                                             </div>
                                         @endif
-                                      <!--   <span class="float-right">
-                                            <a class="btn btn-primary" href="{{ route('print.create') }}">Create</a>
-                                        </span> -->
+                                        <span class="float-right">
+                                            <a class="btn btn-primary" href="{{ route('category.create') }}">Create</a>
+                                        </span>
                                         </p>
         
                                         <table id="exportexample1" class="table table-bordered dt-responsive  nowrap w-100">
@@ -36,7 +36,6 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Title</th>
-                                                <th>Price</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -98,13 +97,12 @@
             responsive: true,
             serverSide: true,
             ajax: {
-                "url": "{{ route('print-list') }}",
+                "url": "{{ route('category-list') }}",
                 "type": "get",
             },
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'title', name: 'title'},
-                {data: 'price', name: 'price'},
+                {data: 'name', name: 'name'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],

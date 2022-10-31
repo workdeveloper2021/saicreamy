@@ -16,7 +16,7 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-       'user_id', 'email',  's_fname','s_lname','s_cumpany',  'address','address2',   'address3',   'country','state',  'pincode','total',  'discount',   'coupon_id',  'transaction_id', 'status', 'payment_mode',   'payment_status', 
+       'user_id', 'email',  's_fname','s_lname','s_cumpany',  'address','address2',   'address3',   'country','state', 'city' ,'contact' ,'pincode','total',  'discount',   'coupon_id',  'transaction_id', 'status', 'payment_mode',   'payment_status','order_note', 
     ];
 
     public function user()

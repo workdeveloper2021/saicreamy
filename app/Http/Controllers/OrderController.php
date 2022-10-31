@@ -40,7 +40,7 @@ class OrderController extends Controller
 
     public function show($id)
     {    
-        $order = Order::first();
+        $order = Order::where('id',$id)->first();
         return view('admin.order.show',compact('order'));
     }
   
@@ -91,7 +91,8 @@ class OrderController extends Controller
             }
          }
         
-          return redirect('home')->with('success', 'your message,here');
+          return redirect('home')->with('success', 'Your Order Place 
+            Successfully');
     }
 
 }

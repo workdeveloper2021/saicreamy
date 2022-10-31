@@ -1,7 +1,7 @@
 @extends('layouts.main')
  <!--Banner Start-->
 @section('content');
-
+ 
     <!--Page Title-->
     <section class="page-title" style="background-image:url(<?= url('/') ?>/images/background/34.jpg)">
         <div class="auto-container">
@@ -47,8 +47,10 @@
                                         </div>
 
                                         <div class="other-options clearfix">
-                                            <div class="item-quantity">Quantity <input class="qty" type="number" value="1" name="quantity"></div>
-                                            <button type="button" class="theme-btn add-to-cart"><span class="btn-title">Add To Cart</span></button>
+                                           
+                                            <div class="item-quantity">Quantity <input class="qty" id="qty{{$pro->id}}" type="number" value="1" name="qty"></div>
+                                            <button  product_id="{{$pro->id}}" submit="cart" type="button"   class="theme-btn add-to-cart cart-item"><span class="btn-title">Add To Cart</span></button>
+                                            
                                             <ul class="product-meta">
                                                 <li class="posted_in">Category: <a href="#">{{$pro->category->name}}</a></li>
                                                 <!-- <li class="tagged_as">Tag: <a href="#">Nuts</a></li> -->
@@ -229,30 +231,44 @@
                                 <div class="widget-content">
                                     <h3 class="widget-title">Cart</h3>
                                     
-                                    <div class="shopping-cart">
-                                        <ul class="shopping-cart-items">
+                                    <div class="shopping-cart" id="cartshow2">
+                                       @if(!empty($cart))
+                                         <ul class="shopping-cart-items">
+                                        <?php 
+                                         $carttotal = 0;
+                                         if(count($cart) > 0) {
+                                            foreach ($cart as $key => $product) {
+                                             $carttotal += $product['price'];
+                                         ?>     
+                                           
                                             <li class="cart-item">
-                                                <img src="{{ url('/') }}/images/resource/products/prod-thumb-1.jpg" alt="#" class="thumb" />
+                                                <img src="{{ URL::to('/') }}/{{ $product['products']['image']}}" alt="#" class="thumb" />
                                                 <span class="item-name">Birthday Cake</span>
-                                                <span class="item-quantity">1 x <span class="item-amount">$84.00</span></span>
-                                                <a href="shop-single.html" class="product-detail"></a>
-                                                <button class="remove-item"><span class="fa fa-times"></span></button>
+                                                <span class="item-quantity">{{ $product['qty']}} x <span class="item-amount">${{ $product['unit_price']}}</span></span>
+                                                 <a href="{{url('/product')}}/{{$product['products']['id']}}" class="product-detail"></a>
+                                                  <a class="remove-item remove-to-cart" href="javascript:void(0);" class="remove-to-cart" id="{{$product->id}}">
+                                                <span class="fa fa-times"></span></a>
                                             </li>
 
-                                            <li class="cart-item">
-                                                <img src="{{ url('/') }}/images/resource/products/prod-thumb-2.jpg" alt="#" class="thumb"  />
-                                                <span class="item-name">French Macaroon</span>
-                                                <span class="item-quantity">1 x <span class="item-amount">$13.00</span></span>
-                                                <a href="shop-single.html" class="product-detail"></a>
-                                                <button class="remove-item"><span class="fa fa-times"></span></button>
-                                            </li>
+                                        <?php } }else{ ?>  
+                                        <li class="clearfix">
+                                            <div class="row" style="width: 253px;">
+                                               
+                                                 <span class="item-name"style="color: red;margin-left: 17px">Cart Empty</span>
+                                            </div>
+                                        </li> 
+
+                                        <?php } ?>
                                         </ul>
 
                                         <div class="cart-footer">
-                                            <div class="shopping-cart-total"><strong>Subtotal:</strong> $97.00</div>
-                                            <a href="cart.html" class="theme-btn">View Cart</a>
-                                            <a href="checkout.html" class="theme-btn">Checkout</a>
+                                            <div class="shopping-cart-total"><strong>Subtotal:</strong> ${{$carttotal }}</div>
+                                            <a href="{{ url('cart') }}" class="theme-btn">View Cart</a>
+                                            <a href="{{ url('checkout') }}" class="theme-btn">Checkout</a>
                                         </div>
+
+                                        @endif
+
                                     </div> <!--end shopping-cart -->
                                 </div>
                             </div>

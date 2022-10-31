@@ -28,7 +28,7 @@
         <!-- end page title -->
 
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
                        
@@ -42,134 +42,16 @@
                                 </ul>
                             </div>
                         @endif
-                           {!! Form::model($post, ['route' => ['print.update', $post->id], 'method'=>'PATCH','enctype' => 'multipart/form-data']) !!}
+                           {!! Form::model($post, ['route' => ['category.update', $post->id], 'method'=>'PATCH','enctype' => 'multipart/form-data']) !!}
                         <div class="row">
                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <div class="form-group m-0">
                                         <label  class="form-label">Title</label>
-                                        {!! Form::text('title', null, array('placeholder' => 'Name','class' => 'form-control','required' =>'required')) !!}
+                                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','required' =>'required')) !!}
                                     </div>
                                 </div>
-                            </div>   
-
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <div class="form-group m-0">
-
-                                        <label  class="form-label">Price</label>
-                                        {!! Form::text('price', null, array('placeholder' => 'Price','class' => 'form-control','required' =>'required')) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <div class="form-group m-0">
-
-                                        <label  class="form-label">Per Character Charge</label>
-                                        {!! Form::text('per_character_price', null, array('placeholder' => 'Per Character Charge','class' => 'form-control','required' =>'required')) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <div class="form-group m-0">
-
-                                        <label  class="form-label">Per Character Limit</label>
-                                        {!! Form::text('minmum_character', null, array('placeholder' => 'Per Character Limit','class' => 'form-control','required' =>'required')) !!}
-                                    </div>
-                                </div>
-                            </div>
-                         
-                            <div class="col-md-4">
-
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <strong>Banner Image:</strong>
-                                        {!! Form::file('banner', array('placeholder' => 'banner image','id' => 'image','class' => 'form-control','accept' =>'image/*')) !!}
-                                    </div>
-                                </div>
-                            </div> 
-
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <strong>Video:</strong>
-                                        {!! Form::file('video', array('placeholder' => 'image','id' => 'image','class' => 'form-control','accept' =>'image/*')) !!}
-                                    </div>
-                                </div>
-                            </div>    
-                            @if($images)
-                            @foreach($images as $value)
-                            
-                            <div class="col-md-2">
-                            
-                            <img src="{{URL::to('/')}}/{{$value['image']}}" style="width: 50%; height: 50%;">
-                            <a href="{{URL::to('/')}}/delete-image/{{$value['id']}}">Delete</a>
-                            </div> 
-                            @endforeach
-                            @endif   
-                            <div class="col-md-12 m-0">
-                                <div class="mb-3">
-                                    <div class="form-group">
-
-                                        <label  class="form-label"> Video Description</label>
-                                        {!! Form::textarea('v_description', null, array('placeholder' => 'Video Description','class' => 'form-control','id'=> 'description','required' =>'required','value'=>'')) !!}
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                             <div class="col-md-12 m-0">
-                                <div class="mb-3">
-                                    <div class="form-group">
-
-                                        <label  class="form-label"> Print Text</label>
-                                        {!! Form::textarea('image', null, array('placeholder' => 'Video Description','class' => 'form-control','id'=> 'print_d','required' =>'required','value'=>'')) !!}
-                                    </div>
-                                    
-                                </div>
-                            </div>        
-
-                            <div class="col-md-12 m-0">
-                                <div class="mb-3">
-                                    <div class="form-group">
-
-                                        <label  class="form-label"> Features </label>
-                                       
-                                        <table class="table table-bordered" id="dynamicAddRemove">
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" name="ftitle[0]" placeholder="Enter subject" class="form-control" />
-                                            </td>
-                                            <td><textarea type="text" name="fdescription[0]" placeholder="Enter subject" class="form-control" ></textarea>
-                                            </td>
-                                            <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add Subject</button></td>
-                                        </tr>
-                                        <?php 
-                                        if(!empty($post['ftitle'])){
-                                            $ftitle = explode('|', $post['ftitle']);
-                                            $fdescription = explode('|', $post['fdescription']);
-                                            foreach ($ftitle as $key => $value) {
-                                        ?>
-                                        <tr>
-                                            <td><input type="text" name="ftitle[]" placeholder="Enter subject" class="form-control" value="{{ $ftitle[$key] }}" />
-                                            </td>
-                                            <td><textarea type="text" name="fdescription[]" placeholder="Enter subject" class="form-control" >{{ $fdescription[$key] }}</textarea>
-                                            </td>
-                                            <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
-                                        </tr>
-                                        <?php } } ?>
-                                    </table>
-                                    </div>
-                                </div>
-                            </div>      
+                            </div>  
                             
                             <div class="col-md-3 m-0">
                                 <div class="mb-3">

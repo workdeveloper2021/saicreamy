@@ -41,14 +41,16 @@
                             <ul class="navigation menu-left clearfix">
                                 <li><a href="{{ url('/')}}">Home</a></li>
                                 <li><a href="{{ url('/about-us')}}">About Us</a></li>
-                                <li class="dropdown"><a href="{{ url('/about-us')}}">Pages</a>
+                                <li><a href="{{ url('/shop')}}">Shop</a></li>
+                               
+                                <!-- <li class="dropdown"><a href="{{ url('/about-us')}}">Pages</a>
                                     <ul>
                                         <li><a href="{{ url('/our-staff')}}">Our Staff</a></li>
                                         <li><a href="{{ url('/pricing-tables')}}">Pricing Tables</a></li>
                                         <li><a href="{{ url('/content-elements')}}">Content Elements</a></li>
                                         <li><a href="{{ url('/recipes-list')}}">Recipes Grid</a></li>
                                     </ul>
-                                </li>
+                                </li> -->
                                 <!-- <li class="dropdown"><a href="{{ url('/portfolio-masonry')}}">Portfolio</a>
                                     <ul>
                                         <li><a href="{{ url('/portfolio-masonry')}}">Masonry</a></li>
@@ -65,8 +67,7 @@
 
                             <ul class="navigation menu-right clearfix">
                                 <li><a href="{{ url('/blog')}}">Blog</a></li>
-                                <li><a href="{{ url('/shop')}}">Shop</a></li>
-                               
+                                
                                 <li><a href="{{ url('/contact')}}">Contacts</a></li>
                                 @auth
                                  <li>   <a  href="{{ route('logout') }}"
@@ -91,33 +92,57 @@
 
                     <div class="outer-box clearfix">
                         <!-- Shoppping Car -->
-                        <div class="cart-btn">
-                            <a href="shopping-cart.html"><i class="icon flaticon-commerce"></i> <span class="count">2</span></a>
+                        <div class="cart-btn" id="cartshow">
+                            <?php 
+                            $user_id =0;
+                            $cart = array();
+                            if(Auth::user()){
+                               $user_id = Auth::user()->id;
+                            }else{
+                               $user_id = Cookie::get('cart');
+                            }
+                            $cart =  DB::table('carts')->where('user_id',$user_id)->get();
 
-                            <div class="shopping-cart">
-                                <ul class="shopping-cart-items">
-                                    <li class="cart-item">
-                                        <img src="{{ url('/') }}/images/resource/products/prod-thumb-1.jpg" alt="#" class="thumb" />
-                                        <span class="item-name">Birthday Cake</span>
-                                        <span class="item-quantity">1 x <span class="item-amount">$84.00</span></span>
-                                        <a href="shop-single.html" class="product-detail"></a>
-                                        <button class="remove-item"><span class="fa fa-times"></span></button>
-                                    </li>
+                             ?>
+                            <a href="shopping-cart.html"><i class="icon flaticon-commerce"></i> <span class="count">{{count($cart)}}</span></a>
 
-                                    <li class="cart-item">
-                                        <img src="{{ url('/') }}/images/resource/products/prod-thumb-2.jpg" alt="#" class="thumb"  />
-                                        <span class="item-name">French Macaroon</span>
-                                        <span class="item-quantity">1 x <span class="item-amount">$13.00</span></span>
-                                        <a href="shop-single.html" class="product-detail"></a>
-                                        <button class="remove-item"><span class="fa fa-times"></span></button>
-                                    </li>
-                                </ul>
+                            <div class="shopping-cart" >
+                               <ul class="shopping-cart-items">
+                            <?php 
+                            $carttotal = 0;
+                             if(count($cart) > 0) {
+                                foreach ($cart as $key => $product) {
+                                 $pro_image = DB::table('products')->where('id',$product->product_id)->first();
 
-                                <div class="cart-footer">
-                                    <div class="shopping-cart-total"><strong>Subtotal:</strong> $97.00</div>
-                                    <a href="cart.html" class="theme-btn">View Cart</a>
-                                    <a href="checkout.html" class="theme-btn">Checkout</a>
+                                 $carttotal += $product->price;
+                             ?>     
+                               
+                                <li class="cart-item">
+                                    <img src="{{ URL::to('/') }}/{{ $pro_image->image}}" alt="#" class="thumb" />
+                                    <span class="item-name">Birthday Cake</span>
+                                    <span class="item-quantity">{{ $product->qty}} x <span class="item-amount">${{ $product->unit_price}}</span></span>
+                                    <a href="{{url('/product')}}/{{ $pro_image->id}}" class="product-detail"></a>
+                                      <a class="remove-item remove-to-cart" href="javascript:void(0);" class="remove-to-cart" id="{{$product->id}}">
+                                    <span class="fa fa-times"></span></a>
+                                </li>
+
+                            <?php } }else{ ?>  
+                            <li class="clearfix">
+                                <div class="row" style="width: 253px;">
+                                  
+                                     <span class="item-name"style="color: red;margin-left: 17px">Cart Empty</span>
+                                    
                                 </div>
+                            </li> 
+
+                            <?php } ?>
+                            </ul>
+
+                            <div class="cart-footer">
+                                <div class="shopping-cart-total"><strong>Subtotal:</strong> ${{$carttotal }}</div>
+                                <a href="{{ url('cart') }}" class="theme-btn">View Cart</a>
+                                <a href="{{ url('checkout') }}" class="theme-btn">Checkout</a>
+                            </div>
                             </div> <!--end shopping-cart -->
                         </div>
 

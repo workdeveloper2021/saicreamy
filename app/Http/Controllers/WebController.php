@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Blog;
 use App\Models\User;
-use App\Models\Otherimage;
+use App\Models\Categorie;
 use Auth;
 use DB;
 use Cookie;
@@ -55,8 +55,9 @@ class WebController extends Controller
     public function blogDetails($id)
     {
         $blog = Blog::where('id',$id)->first();
+        $category = Categorie::where('status',1)->get();
         $this->change_user();
-        return view('blog-single',compact('blog'));
+        return view('blog-single',compact('blog','category'));
     }
 
 
@@ -65,18 +66,88 @@ class WebController extends Controller
 
     public function shop()
     {
-        $product = Product::where('status',1)->get();
+        $user_id =0;
+        $cart = array();
+        if(Auth::user()){
+            if (Cookie::get('cart')) {
+               $user_id = Cookie::get('cart');
+               $auth_user = Auth::user()->id;
+               $cart =  Cart::where('user_id',$user_id)->update(array('user_id'=>$auth_user));
+            }
+            
+           $user_id = Auth::user()->id;
+        }else{
+           $user_id = Cookie::get('cart');
+
+        }
+        $cart =  Cart::with('products')->where('user_id',$user_id)->get();
+        $product = Product::where('status',1);
+        if(isset($_GET['search'])){
+            if ($_GET['search'] != '') {
+            $product = $product->where('title', "like", "%" . $_GET['search'] . "%");
+            $product = $product->orWhere('s_description', "like", "%" . $_GET['search'] . "%");
+            }
+        }
+
+        if(isset($_GET['category'])){
+            if ($_GET['category'] != '') {
+               $product = $product->where('category_id',$_GET['category']);
+            }
+        }
+
+        if(isset($_GET['min'])){
+            if ($_GET['min'] != '' && $_GET['max'] != '' ) {
+                
+                $product = $product->where('price', ">=", $_GET['min']);
+
+                $product = $product->where('price', "<=",$_GET['max']);
+            }
+        }
+
+        if(isset($_GET['sort'])){
+            if ($_GET['sort'] == 'price-asc') {
+
+            $product = $product->orderBy('price','ASC');
+            }elseif ($_GET['sort'] == 'price-desc'){
+            $product = $product->orderBy('price','DESC');
+            }else{
+
+            $product = $product->orderBy('id','DESC');
+            }
+        }else{
+
+            $product = $product->orderBy('id','DESC');
+           
+        }
+        $product = $product->get();
         $this->change_user();
-        return view('shop',compact('product'));
+        return view('shop',compact('product','cart'));
     }
 
    public function product($id)
     {
+
+        $user_id =0;
+        $cart = array();
+        if(Auth::user()){
+            if (Cookie::get('cart')) {
+               $user_id = Cookie::get('cart');
+               $auth_user = Auth::user()->id;
+               $cart =  Cart::where('user_id',$user_id)->update(array('user_id'=>$auth_user));
+            }
+            
+           $user_id = Auth::user()->id;
+        }else{
+           $user_id = Cookie::get('cart');
+
+        }
+        $cart =  Cart::with('products')->where('user_id',$user_id)->get();
+
         $pro = Product::with('category')->where('id',$id)->first();  
         $product = Product::where('status',1)->get();
                
         $this->change_user();  
-        return view('shop-single',compact('pro','product'));
+        return view('shop-single',compact('pro','product','cart'));
     }
 
 

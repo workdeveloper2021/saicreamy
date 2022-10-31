@@ -14,7 +14,7 @@ use FORM;
 use URL;
 class CheckoutController extends Controller
 {
-   
+    
     public function index(Request $request)
     {   
         $user_id =0;
@@ -22,9 +22,9 @@ class CheckoutController extends Controller
         if(Auth::user()){
            $user_id = Auth::user()->id;
             if (Cookie::get('cart')) {
-               $user_id = Cookie::get('cart');
-               $auth_user = Auth::user()->id;
-               $cart =  Cart::where('user_id',$user_id)->update(array('user_id'=>$auth_user));
+               $auth_user = Cookie::get('cart');
+               $user_id = Auth::user()->id;
+               $cart =  Cart::where('user_id',$auth_user)->update(array('user_id'=>$user_id));
             }
         }else{
            $user_id = Cookie::get('cart');

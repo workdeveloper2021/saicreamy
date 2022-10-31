@@ -8,12 +8,11 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Blog</h4>
+                <h4 class="mb-sm-0 font-size-18">Dashboard</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                        <li class="breadcrumb-item active">Blog</li>
+                        <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </div>
 
@@ -24,7 +23,7 @@
 
     <div class="row">
 
-        <div class="col-xl-8">
+        <div class="col-xl-12">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card mini-stats-wid">
@@ -32,8 +31,8 @@
                             
                             <div class="d-flex flex-wrap">
                                 <div class="me-3">
-                                    <p class="text-muted mb-2">Total Post</p>
-                                    <h5 class="mb-0">120</h5>
+                                    <p class="text-muted mb-2">Total User</p>
+                                    <h5 class="mb-0">{{DB::table('users')->count()}}</h5>
                                 </div>
 
                                 <div class="avatar-sm ms-auto">
@@ -53,8 +52,8 @@
 
                             <div class="d-flex flex-wrap">
                                 <div class="me-3">
-                                    <p class="text-muted mb-2">Pages</p>
-                                    <h5 class="mb-0">86</h5>
+                                    <p class="text-muted mb-2">Total Orders</p>
+                                    <h5 class="mb-0">{{DB::table('users')->count()}}</h5>
                                 </div>
 
                                 <div class="avatar-sm ms-auto">
@@ -72,8 +71,62 @@
                         <div class="card-body">
                             <div class="d-flex flex-wrap">
                                 <div class="me-3">
-                                    <p class="text-muted mb-2">Comments</p>
-                                    <h5 class="mb-0">4,235</h5>
+                                    <p class="text-muted mb-2">Category</p>
+                                    <h5 class="mb-0">{{DB::table('categories')->count()}}</h5>
+                                </div>
+
+                                <div class="avatar-sm ms-auto">
+                                    <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                                        <i class="bx bxs-message-square-dots"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-lg-4">
+                    <div class="card blog-stats-wid">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap">
+                                <div class="me-3">
+                                    <p class="text-muted mb-2">Total Product</p>
+                                    <h5 class="mb-0">{{DB::table('products')->count()}}</h5>
+                                </div>
+
+                                <div class="avatar-sm ms-auto">
+                                    <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                                        <i class="bx bxs-message-square-dots"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   <div class="col-lg-4">
+                    <div class="card blog-stats-wid">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap">
+                                <div class="me-3">
+                                    <p class="text-muted mb-2">Total Blog</p>
+                                    <h5 class="mb-0">{{DB::table('blogs')->count()}}</h5>
+                                </div>
+
+                                <div class="avatar-sm ms-auto">
+                                    <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                                        <i class="bx bxs-message-square-dots"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   <div class="col-lg-4">
+                    <div class="card blog-stats-wid">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap">
+                                <div class="me-3">
+                                    <p class="text-muted mb-2">Total Revenue </p>
+                                    <h5 class="mb-0">${{number_format(DB::table('orders')->sum('total'))}}</h5>
                                 </div>
 
                                 <div class="avatar-sm ms-auto">
@@ -88,7 +141,7 @@
             </div>
             <!-- end row -->
 
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-start">
                         <h5 class="card-title me-2">Visitors</h5>
@@ -138,11 +191,11 @@
                     
                     <div class="apex-charts" data-colors='["--bs-primary", "--bs-warning"]' id="area-chart" dir="ltr"></div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- end col -->
 
-        <div class="col-xl-4">
+       <!--  <div class="col-xl-4">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex">
@@ -256,11 +309,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- end col -->
 
     </div>
-    <!-- end row -->
+    <!-- 
 
     <div class="row">
         <div class="col-xl-4 col-lg-6">
@@ -289,7 +342,6 @@
                 <div class="card-body">
 
                     <div data-simplebar style="max-height: 295px;">
-                        <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="post-recent" role="tabpanel">
                                 <ul class="list-group list-group-flush">
@@ -401,7 +453,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- end tab pane -->
+
 
                             <div class="tab-pane" id="post-popular" role="tabpanel">
                                 
@@ -518,14 +570,11 @@
 
                                 </ul>
                             </div>
-                            <!-- end tab pane -->
                         </div>
-                        <!-- end tab content -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- end col -->
         
         <div class="col-xl-4 col-lg-6">
             <div class="card">
@@ -630,7 +679,6 @@
                 </div>
             </div>
         </div>
-        <!-- end col -->
 
         <div class="col-xl-4">
             <div class="card">
@@ -705,11 +753,10 @@
                 </div>
             </div>
         </div>
-        <!-- end col -->
     </div>
-    <!-- end row -->
+   -->
     
-
+<!-- end row
     <div class="row">
         <div class="col-xl-4">
             <div class="card">
@@ -815,9 +862,7 @@
                     <div class="text-center mt-4"><a href="javascript: void(0);" class="btn btn-primary waves-effect waves-light btn-sm">View More <i class="mdi mdi-arrow-right ms-1"></i></a></div>
                 </div>
             </div>
-            <!-- end card -->
         </div>
-        <!-- end col -->
         <div class="col-xl-8">
             <div class="card">
                 <div class="card-body">
@@ -955,11 +1000,9 @@
                     </div>
                 </div>
             </div>
-            <!-- end card -->
         </div>
-        <!-- end col -->
     </div>
-    <!-- end row -->
+     -->
     
 </div> <!-- container-fluid -->
 </div>

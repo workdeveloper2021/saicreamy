@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
 
 use App\Models\Product;
@@ -38,7 +38,7 @@ class CartController extends Controller
         // return $user_id;
         $cart =  Cart::with('products')->where('user_id',$user_id)->get();
         $countries = DB::table('countries')->get();
-        return view('cart',compact('countries','cart'));
+        return view('shopping-cart',compact('countries','cart'));
     }
 
     public function cartList() {
@@ -69,7 +69,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
 
-        $input = $request->except(['_token']);
+        $input = $request->all();
         if(Auth::user()){
            $user_id = Auth::user()->id;
         }else{
@@ -86,32 +86,17 @@ class CartController extends Controller
         $input['user_id'] =$user_id;
         $product = Product::where('id',$input['product_id'])->first();
         $input['unit_price'] =$product->price;
-
-        if(isset($input['printing_text'])){
-            if ($input['printing_text'] != '') {
-             $font = Font::where('name',$input['font'])->first('price');
-             $text = strlen($input['printing_text'])*$product->per_character_price;-
-             $input['unit_price'] =$font->price+$product->price+$text;
-            }
-        }
-
         $input['price'] =  $input['unit_price']*$input['qty'];
-        $input['product_type'] = $product->type;
-        if(isset($input['color'] )){
-
-        $input['color'] = implode(',',$input['color']);
-        }
         $exist = Cart::where(array('product_id'=>$input['product_id'],'user_id'=> $user_id))->count();
         if($exist > 0){
            Cart::where(array('product_id'=>$input['product_id'],'user_id'=> $user_id))->update($input);
         }else{
            Cart::create($input);
         }
-        session()->flash('success', 'Added to Cart Successfully!');
         if ($submit == 'cart') {
-           return redirect()->back();
+           echo 'cart';
         }else{
-           return redirect('checkout');   
+            echo 'wishlist';
         }
     }
 
@@ -145,6 +130,20 @@ class CartController extends Controller
            $user_id = Cookie::get('cart');
         }
         $cart =  Cart::with('products')->where('user_id',$user_id)->get();
+
         return view('cart-item',compact('cart'));
+    }
+
+     public function getcart2(Request $request){
+        $user_id =0;
+        $cart = array();
+        if(Auth::user()){
+           $user_id = Auth::user()->id;
+        }else{
+           $user_id = Cookie::get('cart');
+        }
+        $cart =  Cart::with('products')->where('user_id',$user_id)->get();
+       
+        return view('cart-item2',compact('cart'));
     }
 }
