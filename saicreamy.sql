@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2022 at 03:16 PM
+-- Generation Time: Oct 31, 2022 at 12:48 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -59,12 +59,7 @@ CREATE TABLE `carts` (
   `id` int(255) NOT NULL,
   `user_id` varchar(255) NOT NULL,
   `product_id` int(255) DEFAULT NULL,
-  `product_type` varchar(255) DEFAULT NULL,
-  `size` varchar(255) DEFAULT NULL,
   `qty` int(255) DEFAULT NULL,
-  `printing_text` text DEFAULT NULL,
-  `font` varchar(255) DEFAULT NULL,
-  `color` varchar(255) DEFAULT NULL,
   `unit_price` double(10,2) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `type` varchar(100) DEFAULT 'cart',
@@ -76,9 +71,8 @@ CREATE TABLE `carts` (
 -- Dumping data for table `carts`
 --
 
-INSERT INTO `carts` (`id`, `user_id`, `product_id`, `product_type`, `size`, `qty`, `printing_text`, `font`, `color`, `unit_price`, `price`, `type`, `created_at`, `updated_at`) VALUES
-(30, '2', 1, 'walldecal', NULL, 1, NULL, NULL, NULL, 15.00, '15.00', 'cart', '2022-10-12 07:28:00', '2022-10-12 07:28:00'),
-(31, '2', 2, 'vector', NULL, 1, NULL, NULL, NULL, 12.00, '12.00', 'cart', '2022-10-12 07:28:12', '2022-10-12 07:28:30');
+INSERT INTO `carts` (`id`, `user_id`, `product_id`, `qty`, `unit_price`, `price`, `type`, `created_at`, `updated_at`) VALUES
+(51, '2', 1, 1, 84.00, '84.00', 'cart', '2022-10-31 02:17:33', '2022-10-31 03:26:44');
 
 -- --------------------------------------------------------
 
@@ -99,7 +93,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Cake', 1, '2022-10-29 05:04:54', '2022-10-29 06:31:53');
+(1, 'Cake', 1, '2022-10-29 05:04:54', '2022-10-29 06:31:53'),
+(2, 'Lollipop', 1, '2022-10-31 04:04:14', '2022-10-31 04:43:20');
 
 -- --------------------------------------------------------
 
@@ -48404,12 +48399,15 @@ CREATE TABLE `orders` (
   `address3` text DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
   `pincode` int(100) DEFAULT NULL,
+  `contact` varchar(255) DEFAULT NULL,
   `total` double(10,2) DEFAULT NULL,
   `discount` double(10,2) DEFAULT NULL,
   `coupon_id` int(255) DEFAULT NULL,
   `transaction_id` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT '''pending''',
+  `status` varchar(255) DEFAULT 'pending',
+  `order_note` text DEFAULT NULL,
   `payment_mode` varchar(255) DEFAULT NULL,
   `payment_status` varchar(225) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -48420,8 +48418,8 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `email`, `s_fname`, `s_lname`, `s_cumpany`, `address`, `address2`, `address3`, `country`, `state`, `pincode`, `total`, `discount`, `coupon_id`, `transaction_id`, `status`, `payment_mode`, `payment_status`, `created_at`, `updated_at`) VALUES
-(1, 2, 'admin@gmail.com', 'dsds', 'dsdsds', 'dsds', 'dsds', 'dsds', 'dsds', '15', '295', 4520001, 12.00, NULL, NULL, NULL, '\'pending\'', NULL, NULL, '2022-09-30 06:57:04', '2022-09-30 06:57:04');
+INSERT INTO `orders` (`id`, `user_id`, `email`, `s_fname`, `s_lname`, `s_cumpany`, `address`, `address2`, `address3`, `country`, `state`, `city`, `pincode`, `contact`, `total`, `discount`, `coupon_id`, `transaction_id`, `status`, `order_note`, `payment_mode`, `payment_status`, `created_at`, `updated_at`) VALUES
+(3, 2, 'admin@demo.com', 'dsds', 'dsdsds', 'dsds', NULL, NULL, NULL, 'india', 'madhya praesh', 'indore', 4520001, '8858585852', 84.00, NULL, NULL, NULL, 'pending', NULL, 'Cash On Delivery', NULL, '2022-10-31 01:49:00', '2022-10-31 09:11:47');
 
 -- --------------------------------------------------------
 
@@ -48451,7 +48449,9 @@ CREATE TABLE `order_products` (
 --
 
 INSERT INTO `order_products` (`id`, `order_id`, `user_id`, `product_id`, `product_type`, `size`, `qty`, `printing_text`, `font`, `color`, `unit_price`, `price`, `created_at`, `updated_at`) VALUES
-(1, 1, '2', 3, NULL, '1/2 Pack jungle', 1, NULL, NULL, NULL, NULL, '12.00', '2022-09-30 06:57:04', '2022-09-30 06:57:04');
+(1, 1, '2', 3, NULL, '1/2 Pack jungle', 1, NULL, NULL, NULL, NULL, '12.00', '2022-09-30 06:57:04', '2022-09-30 06:57:04'),
+(2, 2, '2', 1, NULL, NULL, 2, NULL, NULL, NULL, 84.00, '168.00', '2022-10-31 01:47:29', '2022-10-31 01:47:29'),
+(3, 3, '2', 1, NULL, NULL, 1, NULL, NULL, NULL, 84.00, '84.00', '2022-10-31 01:49:00', '2022-10-31 01:49:00');
 
 -- --------------------------------------------------------
 
@@ -48537,7 +48537,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `title`, `category_id`, `price`, `image`, `s_description`, `l_description`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Birthday Cake', 1, 84.00, 'image/202210291207_5543.jpg', 'Accumsan lectus, consectetuer et sagittis et commodo, massa et, sed facilisi mi, sit diam. Ultrices facilisi convallis nullam duis. Aliquam lacinia orci convallis erat ac, vitae neque in class.', '<p>Accumsan lectus, consectetuer et sagittis et commodo, massa et, sed facilisi mi, sit diam. Ultrices facilisi convallis nullam duis. Aliquam lacinia orci convallis erat ac, vitae neque in class.</p>', 1, '2022-10-29 06:37:44', '2022-10-29 06:37:44');
+(1, 'Birthday Cake', 1, 84.00, 'image/202210291207_5543.jpg', 'Accumsan lectus, consectetuer et sagittis et commodo, massa et, sed facilisi mi, sit diam. Ultrices facilisi convallis nullam duis. Aliquam lacinia orci convallis erat ac, vitae neque in class.', '<p>Accumsan lectus, consectetuer et sagittis et commodo, massa et, sed facilisi mi, sit diam. Ultrices facilisi convallis nullam duis. Aliquam lacinia orci convallis erat ac, vitae neque in class.</p>', 1, '2022-10-29 06:37:44', '2022-10-29 06:37:44'),
+(2, 'Candy Lollipop', 2, 25.00, 'image/202210311014_5984.jpg', 'Accumsan lectus, consectetuer et sagittis et commodo, massa et, sed facilisi mi, sit diam. Ultrices facilisi convallis nullam duis. Aliquam lacinia orci convallis erat ac, vitae neque in class.', '<p>Accumsan lectus, consectetuer et sagittis et commodo, massa et, sed facilisi mi, sit diam. Ultrices facilisi convallis nullam duis. Aliquam lacinia orci convallis erat ac, vitae neque in class.</p>', 1, '2022-10-31 04:44:19', '2022-10-31 04:44:19');
 
 -- --------------------------------------------------------
 
@@ -52788,13 +52789,13 @@ ALTER TABLE `blogs`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -52824,13 +52825,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_products`
 --
 ALTER TABLE `order_products`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `otherimages`
@@ -52848,7 +52849,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `states`
