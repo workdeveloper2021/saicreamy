@@ -1,14 +1,26 @@
-@extends('layouts.app')
+@extends('layouts.main')
+ <!--Banner Start-->
+@section('content');
+<!--Page Title-->
+    <section class="page-title" style="background-image:url(<?= url('/') ?>/images/background/34.jpg)">
+        <div class="auto-container">
+            <h1>{{ __('Reset Password') }}</h1>
+            <ul class="page-breadcrumb">
+                <li><a href="{{ url('/')}}">home</a></li>
+                <li>{{ __('Reset Password') }}</li>
+            </ul>
+        </div>
+    </section>
+    <!--End Page Title-->
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
+    <!--Login Section-->
+    <section class="login-section">
+        <div class="auto-container">
+            <!-- Login Form -->
+            <div class="login-form">
+                <h2>{{ __('Reset Password') }}</h2>
+                <!--Login Form-->
+                   <form method="POST" action="{{ route('password.update') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
@@ -57,9 +69,9 @@
                             </div>
                         </div>
                     </form>
-                </div>
             </div>
+            <!--End Login Form -->  
         </div>
-    </div>
-</div>
+    </section>
+    <!--End Login Section-->
 @endsection

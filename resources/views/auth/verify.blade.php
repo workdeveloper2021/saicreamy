@@ -1,13 +1,26 @@
-@extends('layouts.app')
+@extends('layouts.main')
+ <!--Banner Start-->
+@section('content');
+<!--Page Title-->
+    <section class="page-title" style="background-image:url(<?= url('/') ?>/images/background/34.jpg)">
+        <div class="auto-container">
+            <h1>{{ __('Verify Your Email Address') }}</h1>
+            <ul class="page-breadcrumb">
+                <li><a href="{{ url('/')}}">home</a></li>
+                <li>{{ __('Verify Your Email Address') }}</li>
+            </ul>
+        </div>
+    </section>
+    <!--End Page Title-->
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
+    <!--Login Section-->
+    <section class="login-section">
+        <div class="auto-container">
+            <!-- Login Form -->
+            <div class="login-form">
+                <h2>{{ __('Verify Your Email Address') }}</h2>
+                <!--Login Form-->
+                 <div class="card-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
                             {{ __('A fresh verification link has been sent to your email address.') }}
@@ -22,7 +35,8 @@
                     </form>
                 </div>
             </div>
+            <!--End Login Form -->  
         </div>
-    </div>
-</div>
+    </section>
+    <!--End Login Section-->
 @endsection

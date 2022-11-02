@@ -7,10 +7,13 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Blog;
 use App\Models\User;
+use App\Models\Review;
+use App\Models\Order;
 use App\Models\Categorie;
 use Auth;
 use DB;
 use Cookie;
+use PDF;
 class WebController extends Controller
 {
    
@@ -150,9 +153,11 @@ class WebController extends Controller
 
         $pro = Product::with('category')->where('id',$id)->first();  
         $product = Product::where('status',1)->get();
-               
+        
+        $review = Review::paginate(5);
+        $totalr = Review::count();       
         $this->change_user();  
-        return view('shop-single',compact('pro','product','cart'));
+        return view('shop-single',compact('pro','product','cart','review','totalr'));
     }
 
 
@@ -191,6 +196,29 @@ class WebController extends Controller
             return Response()->json($states);
         }
     }
+
+
+    public function myorder(Request $request){
+        $order = array();
+        if(Auth::user()){
+              $order = Order::where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate(10);
+        }
+      
+        return view('order',compact('order'));
+    }
+
+     public function inovice($id){
+          
+        return view('invoice');  
+        $pdf = PDF::loadView('invoice', [
+            'title' => 'CodeAndDeploy.com Laravel Pdf Tutorial',
+            'description' => 'This is an example Laravel pdf tutorial.',
+            'footer' => 'by <a href="https://codeanddeploy.com">codeanddeploy.com</a>'
+        ]);
+
+        return $pdf->download('sample.pdf'); 
+    }
+
 
     // public function citylist(Request $request) {
 

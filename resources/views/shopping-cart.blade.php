@@ -7,7 +7,7 @@
         <div class="auto-container">
             <h1>Cart</h1>
             <ul class="page-breadcrumb">
-                <li><a href="index.html">home</a></li>
+                <li><a href="{{url('/')}}">home</a></li>
                 <li>Cart</li>
             </ul>
         </div>

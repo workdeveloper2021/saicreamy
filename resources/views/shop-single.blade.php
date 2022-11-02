@@ -1,7 +1,145 @@
 @extends('layouts.main')
  <!--Banner Start-->
 @section('content');
- 
+ <style type="text/css">
+
+.startlight{
+    color: #aaa!important;
+}
+}
+.rating > input { display: none; } 
+
+.rating.star > label {
+    color: #dee2e6;
+    margin: 1px 20px 0px 0px;
+    background-color: #ffffff;
+    border-radius: 0;
+    height: 48px;
+    float: right;
+    width: 44px;
+    border: 1px solid #ffffff;
+}
+fieldset.rating.star > label:before { 
+    margin-top: 0;
+    padding: 0px;
+    font-size: 47px;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\2605";
+    position: relative;
+    top: -9px;
+}
+.rating > label:before {
+    margin-top: 2px;
+    padding: 5px 12px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "";
+}
+.rating > .half:before { 
+  content: "\f089";
+  position: absolute;
+}
+.rating.star > label{
+  background-color: transparent !important;
+}
+.rating > label { 
+    color: #fff;
+    margin: 1px 11px 0px 0px;
+    background-color: #dee2e6;
+    border-radius: 2px;
+    height: 16px;
+    float: right;
+    width: 16px;
+    border: 1px solid #c1c0c0;  
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { 
+    background-color:#ebba44!important;
+  cursor:pointer;
+} /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { 
+    background-color:#ebba44!important;
+  cursor:pointer;
+} 
+.rating.star:not(:checked) > label:hover, /* hover current star */
+.rating.star:not(:checked) > label:hover ~ label { 
+  color:#ebba44!important;
+  background-color: transparent !important;
+  cursor:pointer;
+} /* hover previous stars in list */
+
+.rating.star > input:checked + label:hover, /* hover current star when changing rating.star */
+.rating.star > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating.star > input:checked ~ label:hover ~ label { 
+  color:#ebba44!important;
+  cursor:pointer;
+  background-color: transparent !important;
+} 
+.star_rating{
+        width: 500px;
+    margin: 0 auto;
+    border: 1px solid #ff0000;
+    padding: 3px 30px 72px 35px;
+    box-shadow: 0 0 15px #ebba44;
+    margin-top: 2%;
+    border-radius: 14px;
+}
+.star_rating h2 {
+  font-size: 27px;
+  text-transform: uppercase;
+}
+.star_rating p {
+  font-size: 17px;
+  color: #dee2e6;
+  clear: both;
+  margin-bottom: 3px;
+}
+.star_rating h4 {
+    font-size: 17px;
+    color: #dee2e6;
+    clear: both;
+    margin-bottom: 3px;
+    border-top: 2px solid #ebba44;
+    padding-top: 16px;
+    text-align: center;
+}
+@media screen and (max-width: 500px){
+  .star_rating {
+    width: 100%;
+    padding: 3px 8px 72px 6px;
+  }
+  .rating.star {
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    float: none;
+  }
+  .rating.star > label {
+    margin: 1px;
+    width: 19%;
+  }
+}
+/*css by hemant*/
+.comments-area svg{
+    width: 30px;
+    /*width: 30px !important;*/
+}
+.flex.justify-between.flex-1{
+    display: none;
+}
+nav[role=navigation]{
+    text-align: right;
+}
+/*css by hemant*/
+ </style>
     <!--Page Title-->
     <section class="page-title" style="background-image:url(<?= url('/') ?>/images/background/34.jpg)">
         <div class="auto-container">
@@ -69,7 +207,7 @@
                                     <!--Tab Btns-->
                                     <ul class="tab-btns tab-buttons clearfix">
                                         <li data-tab="#prod-details" class="tab-btn">Descripton</li>
-                                        <li data-tab="#prod-reviews" class="tab-btn active-btn">Review (2)</li>
+                                        <li data-tab="#prod-reviews" class="tab-btn active-btn">Review ({{$totalr}})</li>
                                     </ul>
                                     
                                     <!--Tabs Container-->
@@ -85,85 +223,115 @@
                                         
                                         <!--Tab-->
                                         <div class="tab active-tab" id="prod-reviews">
-                                            <h2 class="title">2 reviews for Birthday Cake</h2>
+                                            <h2 class="title">{{$totalr}} reviews for  {{$pro->title}}</h2>
                                             <!--Reviews Container-->
                                             <div class="comments-area">
+                                                @if($review)
+                                                @foreach($review as $key => $rating)
                                                 <!--Comment Box-->
                                                 <div class="comment-box">
                                                     <div class="comment">
-                                                        <div class="author-thumb"><img src="{{ url('/') }}/images/resource/avatar-1.jpg" alt=""></div>
+                                                        <div class="author-thumb"><img src="{{ url('/') }}/images/resource/149071.png" alt=""></div>
                                                         <div class="comment-inner">
                                                             <div class="comment-info clearfix">
-                                                                <strong class="name">Stuart</strong> 
-                                                                <span class="date">– 07 Jun</span>
+                                                                <strong class="name">{{$rating->name}}</strong> 
+                                                                <span class="date">– {{date('d',strtotime($rating->created_at))}} {{date('M',strtotime($rating->created_at))}}</span>
                                                             </div> 
                                                             <div class="rating">
-                                                                <span class="fa fa-star"></span>
-                                                                <span class="fa fa-star"></span>
-                                                                <span class="fa fa-star"></span>
-                                                                <span class="fa fa-star"></span>
-                                                                <span class="fa fa-star light"></span>
+                                                             @if($rating->rating == 1)
+
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star startlight"></span>
+                                                            <span class="fa fa-star startlight"></span>
+                                                            <span class="fa fa-star startlight"></span>
+                                                            <span class="fa fa-star startlight light"></span>
+
+                                                             @elseif($rating->rating == 2)
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star startlight"></span>
+                                                            <span class="fa fa-star startlight"></span>
+                                                            <span class="fa fa-star startlight"></span>
+
+                                                             @elseif($rating->rating == 3)
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star startlight"></span>
+                                                            <span class="fa fa-star startlight"></span>
+
+                                                             @elseif($rating->rating == 4)
+
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star startlight"></span>
+
+                                                             @elseif($rating->rating == 5)
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star"></span>
+                                                             @endif
+                                                                
                                                             </div>
-                                                            <div class="text">This will go great with my Hoodie that I ordered a few weeks ago.</div>
+                                                            <div class="text">{{$rating->review}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 
-                                                <!--Comment Box-->
-                                                <div class="comment-box">
-                                                    <div class="comment">
-                                                        <div class="author-thumb"><img src="{{ url('/') }}/images/resource/avatar-2.png" alt=""></div>
-                                                        <div class="comment-inner">
-                                                             <div class="comment-info clearfix">
-                                                                <strong class="name">Maria</strong> 
-                                                                <span class="date">– 07 Jun</span>
-                                                            </div> 
-                                                            <div class="rating">
-                                                                <span class="fa fa-star"></span>
-                                                                <span class="fa fa-star"></span>
-                                                                <span class="fa fa-star"></span>
-                                                                <span class="fa fa-star"></span>
-                                                                <span class="fa fa-star light"></span>
-                                                            </div>
-                                                            <div class="text">Love this shirt! The ninja near and dear to my heart.</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                              
+                                                @endforeach
+                                                @endif
+                                                {{ $review->links() }}
                                             </div>
                                             
                                             <!--Comment Form-->
                                             <div class="comment-form">
                                                 <div class="sub-title">Add a review</div>
                                                 <div class="form-outer">
-                                                    <p>Your email address will not be published. Required fields are marked *</p>
+                                                    <p>Your email address will not be published. Requi#ebba44 fields are marked *</p>
+                                                    <form method="post" action="{{ route('review.store')}}">
+                                                    @csrf 
                                                     <div class="rating-box">
                                                         <div class="field-label">Your Rating</div>
-                                                        <div class="rating">
-                                                            <a href="#"><span class="fa fa-star"></span></a>
-                                                            <a href="#"><span class="fa fa-star"></span></a>
-                                                            <a href="#"><span class="fa fa-star"></span></a>
-                                                            <a href="#"><span class="fa fa-star"></span></a>
-                                                            <a href="#"><span class="fa fa-star"></span></a>
-                                                        </div>
+                                                        
+                                                        <fieldset class="rating star">
+                                                        <input type="radio" id="field6_star5" name="rating" value="5" style="display: none;"  />
+                                                        <label class = "full" for="field6_star5"></label>
+                                                        <input type="radio" id="field6_star4" name="rating" value="4" style="display: none;"  />
+                                                        <label class = "full" for="field6_star4"></label>
+                                                        <input type="radio" id="field6_star3" name="rating" value="3" style="display: none;"  />
+                                                        <label class = "full" for="field6_star3"></label>
+                                                        <input type="radio" id="field6_star2" name="rating" value="2" style="display: none;" />
+                                                        <label class = "full" for="field6_star2"></label>
+                                                        <input type="radio" id="field6_star1" name="rating" value="1" style="display: none;" />
+                                                        <label class = "full" for="field6_star1"></label>
+                                                         
+                                                         </fieldset>
+                                                      
                                                     </div>
-                                                    <form method="post" action="http://html.cwsthemes.com/bellaria/blog-showcase.html"> 
+                                                  
                                                         <div class="row clearfix">
                                                             <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                                                 <div class="field-label">Your review *</div>
-                                                                <textarea name="message" placeholder=""></textarea>
+                                                                <textarea required name="review" placeholder=""></textarea>
                                                             </div>
 
                                                             <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                                                 <div class="field-label">Name *</div>
-                                                                <input type="text" name="username" placeholder="" required="">
+                                                                <input type="text" name="name" placeholder="" requi#ebba44="">
                                                             </div>
                                                             
                                                             <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                                                 <div class="field-label">Email *</div>
-                                                                <input type="email" name="email" placeholder="" required="">
+                                                                <input type="email" name="email" placeholder="" requi#ebba44="">
                                                             </div>
 
                                                             <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right">
+                                                            <input type="hidden" name="product_id" value="{{$pro->id}}">   
                                                                 <input type="submit" name="submit" value="Submit">
                                                             </div>
                                                         </div>
@@ -220,7 +388,7 @@
                             <div class="sidebar-widget search-widget">
                                 <form method="post" action="http://html.cwsthemes.com/bellaria/contact.html">
                                     <div class="form-group">
-                                        <input type="search" name="search-field" value="" placeholder="Search products…" required>
+                                        <input type="search" name="search-field" value="" placeholder="Search products…" requi#ebba44>
                                         <button type="submit"><span class="icon fa fa-search"></span></button>
                                     </div>
                                 </form>
@@ -254,7 +422,7 @@
                                         <li class="clearfix">
                                             <div class="row" style="width: 253px;">
                                                
-                                                 <span class="item-name"style="color: red;margin-left: 17px">Cart Empty</span>
+                                                 <span class="item-name"style="color: #ebba44;margin-left: 17px">Cart Empty</span>
                                             </div>
                                         </li> 
 
@@ -294,4 +462,20 @@
         </div>
     </div>
     <!--End Sidebar Page Container-->
+@endsection
+@section('script')
+<script type="text/javascript">
+    $("label").click(function(){
+      $(this).parent().find("label").css({"background-color": "#dee2e6"});
+      $(this).css({"background-color": "#ebba44"});
+      $(this).nextAll().css({"background-color": "#ebba44"});
+    });
+    $(".star label").click(function(){
+      $(this).parent().find("label").css({"color": "#dee2e6"});
+      $(this).css({"color": "#ebba44"});
+      $(this).nextAll().css({"color": "#ebba44"});
+      $(this).css({"background-color": "transparent"});
+      $(this).nextAll().css({"background-color": "transparent"});
+    });
+</script>
 @endsection

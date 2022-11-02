@@ -43,6 +43,17 @@
                             </span>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <label>Mobile *</label>
+                        <input id="contact" type="contact" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact">
+
+                        @error('contact')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                     
                     <div class="form-group">
                         <label>Password *</label>
