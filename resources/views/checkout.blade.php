@@ -36,16 +36,9 @@
 
                                 <!--Form Group-->
                                 <div class="form-group">
-                                    <div class="field-label">First name <sup>*</sup></div>
-                                    <input type="text" name="s_fname" class="form-control form-control-lg" placeholder="First name" required>
+                                    <div class="field-label">Full Name <sup>*</sup></div>
+                                    <input type="text" name="s_fname" class="form-control form-control-lg" placeholder="First name" <?php if (Auth::user()): ?> value="{{Auth::user()->name}}" <?php endif ?> required>
                                 </div>
-                                
-                                <!--Form Group-->
-                                <div class="form-group">
-                                    <div class="field-label">Last name <sup>*</sup></div>
-                                    <input type="text" name="s_lname" class="form-control form-control-lg" placeholder="Last name" required>
-                                </div>
-                                
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Company name (optional)</div>
@@ -54,7 +47,7 @@
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Street address <sup>*</sup></div>
-                                     <input type="text" name="address2" class="form-control form-control-lg" placeholder="Apartment, suite, etc. (optional)" required>
+                                     <input type="text" name="address" class="form-control form-control-lg" placeholder="Apartment, suite, etc. (optional)" required>
                                 </div>
 
                                 <div class="form-group">
@@ -63,16 +56,26 @@
                                  <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Country <sup>*</sup></div>
-                                    <input type="text" name="country" value="" placeholder="" required="">
+                                    <input type="text" name="country"  placeholder="" required="" value="India" readonly>
                                 </div>
                                 <div class="form-group">
                                     <div class="field-label">State <sup>*</sup></div>
-                                      <input type="text" name="state" value="" placeholder="" required="">
+                                      <select class="form-control-lg" name="state" id="states" style="width: 100%;" required>
+                                            @if($states)
+                                            @foreach($states as $value)    
+                                                <option <?php if ($value->id==21): ?>selected<?php endif ?>  value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                            @endif    
+                                              
+                                            </select>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Town / City <sup>*</sup></div>
-                                    <input type="text" name="city" value="" placeholder="" required="">
+                                     <select class="form-control-lg" name="city" id="city" style="width: 100%;" required>
+                                                <option value="">Select City</option>
+                                                
+                                            </select>
                                 </div>
                                 
                                
@@ -86,13 +89,13 @@
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Phone<sup>*</sup></div>
-                                    <input type="text" name="contact" value="" placeholder="" required>
+                                    <input type="text" name="contact" <?php if (Auth::user()): ?> value="{{Auth::user()->contact}}" <?php endif ?> placeholder="" required>
                                 </div>
 
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Email Address</div>
-                                    <input type="text" name="email" value="" placeholder="">
+                                    <input type="text" name="email" <?php if (Auth::user()): ?> value="{{Auth::user()->email}}" <?php endif ?> placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -197,4 +200,40 @@
         </form>
     </section>
     <!--End CheckOut Page-->
+@endsection
+
+@section('script')
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#states').trigger('change');
+})
+$(document).on('change','#states',function(e){
+        e.preventDefault();
+        var state_id = $(this).val();
+            $.ajax({
+                type: "get",
+                contentType: 'application/json',
+                "url": "{{ route('city-list') }}",
+                data:{state_id: state_id},
+                success: function (res) {
+                    console.log(res);
+                    $('#state').html('');
+                    if (res) {
+                        var states = res;
+                        $.each(states, function () {
+                            $("#city").append('<option value="' + this.name + '">' + this.name + '</option>');
+                        });
+                    } else {
+                        $("#city").append('<option value="">Select City</option>');
+                    }
+                    getCityFn();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+    })    
+</script>
+
 @endsection

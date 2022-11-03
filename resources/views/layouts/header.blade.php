@@ -42,7 +42,8 @@
                                 <li><a href="{{ url('/')}}">Home</a></li>
                                 <li><a href="{{ url('/about-us')}}">About Us</a></li>
                                 <li><a href="{{ url('/shop')}}">Shop</a></li>
-                               
+                                <li><a href="{{ url('/blog')}}">Blog</a></li>
+                                
                                 <!-- <li class="dropdown"><a href="{{ url('/about-us')}}">Pages</a>
                                     <ul>
                                         <li><a href="{{ url('/our-staff')}}">Our Staff</a></li>
@@ -66,10 +67,11 @@
                             </ul>
 
                             <ul class="navigation menu-right clearfix">
-                                <li><a href="{{ url('/blog')}}">Blog</a></li>
                                 
                                 <li><a href="{{ url('/contact')}}">Contacts</a></li>
                                 @auth
+                                 <li><a href="{{ url('/myorder')}}">My Order</a></li>
+                                 
                                  <li>   <a  href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">

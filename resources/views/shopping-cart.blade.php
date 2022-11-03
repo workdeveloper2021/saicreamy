@@ -41,9 +41,9 @@
                             <tr class="cart-item">
                                 <td class="product-thumbnail"><a href="{{url('/product')}}/{{$product['products']['id']}}"><img src="{{ URL::to('/') }}/{{ $product['products']['image']}}" alt=""></a></td>
                                 <td class="product-name"><a href="shop-single.html">{{$product['products']['title']}}</a></td>
-                                <td class="product-price">${{ number_format( $product['unit_price'],2)}}</td> 
+                                <td class="product-price">₹{{ number_format( $product['unit_price'],2)}}</td> 
                                 <td class="product-quantity"><div class="quantity"><label>Quantity</label><input type="number" class="qty" name="qty" value="{{$product['qty']}}"> </div></td>
-                                <td class="product-subtotal"><span class="amount">${{ number_format($product['price'],2)}}</span></td>
+                                <td class="product-subtotal"><span class="amount">₹{{ number_format($product['price'],2)}}</span></td>
                                 <td class="product-remove"> <a href="#" class="remove"><span class="fa fa-times"></span></a></td>
                             </tr>
                         <?php } }else{ ?>  
@@ -78,8 +78,8 @@
                     <!--Totals Table-->
                     <ul class="totals-table">
                         <li><h3>Cart Totals</h3></li>
-                        <li class="clearfix"><span class="col">Subtotal</span><span class="col price">${{ number_format( $carttotal ,2)}}</span></li>
-                        <li class="clearfix"><span class="col">Total</span><span class="col total-price">${{ number_format( $carttotal ,2)}}</span></li>
+                        <li class="clearfix"><span class="col">Subtotal</span><span class="col price">₹{{ number_format( $carttotal ,2)}}</span></li>
+                        <li class="clearfix"><span class="col">Total</span><span class="col total-price">₹{{ number_format( $carttotal ,2)}}</span></li>
                         <li class="text-right" style="margin-top: 20px;"><a  href="{{ URL::to('checkout') }}" class="theme-btn proceed-btn">Proceed to Checkout</a></li>
                     </ul>
                 </div>  

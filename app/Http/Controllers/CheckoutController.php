@@ -30,8 +30,8 @@ class CheckoutController extends Controller
            $user_id = Cookie::get('cart');
         }
          $cart =  Cart::with('products')->where('user_id',$user_id)->get();
-        $countries = DB::table('countries')->get();
-        return view('checkout',compact('countries','cart'));
+        $states = DB::table('states')->get();
+        return view('checkout',compact('states','cart'));
     }
 
 }

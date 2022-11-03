@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order_product;
 use App\Models\Cart;
 use App\Models\Blog;
 use App\Models\User;
@@ -208,28 +209,30 @@ class WebController extends Controller
     }
 
      public function inovice($id){
-          
-        return view('invoice');  
-        $pdf = PDF::loadView('invoice', [
-            'title' => 'CodeAndDeploy.com Laravel Pdf Tutorial',
-            'description' => 'This is an example Laravel pdf tutorial.',
-            'footer' => 'by <a href="https://codeanddeploy.com">codeanddeploy.com</a>'
-        ]);
+        $order = Order::with('user')->with('order_products')->where('id',$id)->first();
+        $html = view('invoice',compact('order'));  
+        $pdf = PDF::loadHTML($html);
 
-        return $pdf->download('sample.pdf'); 
+        return $pdf->download('invoice.pdf'); 
     }
 
 
-    // public function citylist(Request $request) {
+    public function cityList(Request $request) {
 
-    //     $input = $request->all();
-    //     $city = Cities::where('state_id', $input['state_id'])->get()->toArray();
-    //     if (count($city)) {
-    //         $message = 'Success';
-    //         return Response()->json($city);
-    //     } else {
-    //         $message = 'Data not found';
-    //         return Response()->json($city);
-    //     }
-    // }
+        $input = $request->all();
+        $city = DB::table('cities')->where('state_id', $input['state_id'])->get()->toArray();
+        if (count($city)) {
+            $message = 'Success';
+            return Response()->json($city);
+        } else {
+            $message = 'Data not found';
+            return Response()->json($city);
+        }
+    }
+
+
+    public function viewdd(){
+        $order = Order::with('user')->with('order_products')->where('id',3)->first();
+        return view('emails.myTestMail',compact('order'));
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order_product extends Model
+class Giftcard extends Model
 {
     use HasFactory;
 
@@ -16,11 +16,8 @@ class Order_product extends Model
      */
     protected $fillable = [
         
-        'user_id','order_id', 'product_id', 'size', 'qty', 'printing_text', 'font', 'color', 'price', 'type','unit_price','product_type' 
+        'id',  'title',   'amount',  'start_date',  'end_date',    'image',   'type',    'giftcode',    'status'  
+ 
 	
     ];
-
-    public function products(){
-        return $this->hasOne('App\Models\Order')->withPivot('quantity');
-    }
 }

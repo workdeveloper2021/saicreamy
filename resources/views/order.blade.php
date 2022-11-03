@@ -1,7 +1,18 @@
 @extends('layouts.main')
  <!--Banner Start-->
 @section('content');
- 
+ <style type="text/css">
+ nav[role=navigation]{
+    text-align: right;
+}
+.auto-container svg{
+    width: 30px;
+    /*width: 30px !important;*/
+}
+.flex.justify-between.flex-1{
+    display: none;
+}    
+ </style>
     <!--Page Title-->
     <section class="page-title" style="background-image:url(<?= url('/') ?>/images/background/34.jpg)">
         <div class="auto-container">
@@ -20,11 +31,15 @@
             <!--Cart Outer-->
             <div class="cart-outer">
                 <div class="table-outer">
+                    @if(\Session::has('success'))
+                        <div class="alert alert-success">
+                            <p>{{ \Session::get('success') }}</p>
+                        </div>
+                    @endif
                     <table class="cart-table">
                         <thead class="cart-header">
                             <tr>
-                                <th >S.no.</th>
-                                <th>Order</th>
+                                <th>Order No.</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
                                 <th>Order Date</th>
@@ -35,8 +50,7 @@
                          @if($order)
                          @foreach ($order as $key => $value) 
                             <tr class="cart-item">
-                                <td class="product-thumbnail">{{ $key+1}}</td>
-                                <td >{{ $value->id}}</td>
+                                <td >0000{{ $value->id}}</td>
                                 <td >₹{{ $value->total}}</td>
                                 <td class="product-price">{{ $value->status}}</td>
                                 <td class="product-name">{{date('d-m-Y',strtotime($value->created_at))}}</td>
@@ -55,6 +69,7 @@
                     </table>
                 </div>
 
+                  {{ $order->links() }}
                
             </div>
             

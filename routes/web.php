@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\GiftcardController;
 /*
 /*
 /*
@@ -29,6 +30,7 @@ use App\Http\Controllers\CheckoutController;
 Auth::routes();
 
 Route::get('/home', [WebController::class, 'index'])->name('home');
+Route::get('/viewdd', [WebController::class, 'viewdd'])->name('viewdd');
 
 Route::get('/blog', [WebController::class, 'blog']);
 Route::get('/blog-single/{id}', [WebController::class, 'blogDetails']);
@@ -66,6 +68,7 @@ Route::get('/deletecart', [CartController::class, 'deletecart'])->name('deleteca
 
 Route::get('/deletecart/{id}', [CartController::class, 'delete_cart']);
 Route::get('state-list/', [WebController::class, 'stateList'])->name('state-list');
+Route::get('city-list/', [WebController::class, 'cityList'])->name('city-list');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::resource('review', ReviewController::class);
@@ -90,5 +93,7 @@ Route::group(['prefix' => '/admin','middleware' => 'auth'],function () {
     Route::resource('user', UserController::class);
    
     Route::get('user-List/', [UserController::class, 'userList'])->name('user-list');
-
+    
+    Route::resource('giftcard', GiftcardController::class);
+    Route::get('giftcard-List/', [GiftcardController::class, 'giftcardList'])->name('giftcard-list');
 });

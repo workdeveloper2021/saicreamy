@@ -80,6 +80,7 @@ class OrderController extends Controller
          $input = $request->except(['_token']);
          $input['user_id'] = Auth::user()->id;
          $input['total'] = Cart::where(array('user_id'=>$input['user_id'],'type'=>'cart') )->sum('price');
+         $input['state'] = DB::table('states')->where('id',$input['state'])->value('name');
          $order = Order::create($input);
          $cart = Cart::where(array('user_id'=>$input['user_id'],'type'=>'cart'))->get()->toArray();
          if (!empty($cart)) {
@@ -91,8 +92,11 @@ class OrderController extends Controller
             }
          }
         
-          return redirect('home')->with('success', 'Your Order Place 
-            Successfully');
+         $order = Order::with('user')->with('order_products')->where('id',$order->id)->first();
+       
+        \Mail::to($input['email'])->send(new \App\Mail\MyTestMail($order));
+
+          return redirect('myorder')->with('success', 'Congratulation your order has been successfully placed! ');
     }
 
 

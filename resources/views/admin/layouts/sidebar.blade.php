@@ -15,6 +15,12 @@
                 <span key="t-chat">Blog</span>
             </a>
         </li>
+        <li>
+            <a href="{{ URL::to('admin/giftcard') }}" class="waves-effect">
+               <i class="bx bx-layout"></i>
+                <span key="t-chat">Coupons</span>
+            </a>
+        </li>
 
         <li>
             <a href="{{ URL::to('admin/category') }}" class="waves-effect">

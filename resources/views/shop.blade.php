@@ -54,7 +54,7 @@
                                         <div class="rating"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star light"></span></div>
                                     <div class="price">
                                         <!-- <del>$29.00</del> -->
-                                         ${{$pro->price}}</div>
+                                         ₹{{$pro->price}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                             <li class="cart-item">
                                                 <img src="{{ URL::to('/') }}/{{ $product['products']['image']}}" alt="#" class="thumb" />
                                                 <span class="item-name">Birthday Cake</span>
-                                                <span class="item-quantity">{{ $product['qty']}} x <span class="item-amount">${{ $product['unit_price']}}</span></span>
+                                                <span class="item-quantity">{{ $product['qty']}} x <span class="item-amount">₹{{ $product['unit_price']}}</span></span>
                                                  <a href="{{url('/product')}}/{{$product['products']['id']}}" class="product-detail"></a>
                                                   <a class="remove-item remove-to-cart" href="javascript:void(0);" class="remove-to-cart" id="{{$product->id}}">
                                                 <span class="fa fa-times"></span></a>
@@ -117,7 +117,7 @@
                                         </ul>
 
                                         <div class="cart-footer">
-                                            <div class="shopping-cart-total"><strong>Subtotal:</strong> ${{$carttotal }}</div>
+                                            <div class="shopping-cart-total"><strong>Subtotal:</strong> ₹{{$carttotal }}</div>
                                             <a href="{{ url('cart') }}" class="theme-btn">View Cart</a>
                                             <a href="{{ url('checkout') }}" class="theme-btn">Checkout</a>
                                         </div>
