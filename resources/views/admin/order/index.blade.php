@@ -55,7 +55,38 @@
                     </div> <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
-
+<div id="exampleModal" class="modal fade bs-example-modal-center" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <form method="post" action="{{route('orderstatus')}}">
+                @csrf
+                <div class="col-lg-6">
+                    <div>
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="order_s" name="status" required>
+                            <option value="">Select Status</option>
+                            <option value="pending">pending</option>
+                            <option value="in progress">in progress</option>
+                            <option value="complete">complete</option>
+                        </select>
+                        <input type="hidden" name="order_id" id="order_id">
+                    </div>
+                    <div><br>
+                        <button type="submit" class="btn btn-primary w-md">Submit</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 @endsection
 
@@ -116,5 +147,14 @@
     });
 
 
+</script>
+<script type="text/javascript">
+    $(document).on('click','.changestatus',function(){
+        var order_id = $(this).attr('id');
+        var status = $(this).attr('status');
+        $('#exampleModal').modal('show');
+        $('#order_s').val(status);
+        $('#order_id').val(order_id);
+    })
 </script>
 @endsection

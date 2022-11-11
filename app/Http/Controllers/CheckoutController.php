@@ -29,7 +29,7 @@ class CheckoutController extends Controller
         }else{
            $user_id = Cookie::get('cart');
         }
-         $cart =  Cart::with('products')->where('user_id',$user_id)->get();
+        $cart =  Cart::with('products')->where('user_id',$user_id)->get();
         $states = DB::table('states')->get();
         return view('checkout',compact('states','cart'));
     }

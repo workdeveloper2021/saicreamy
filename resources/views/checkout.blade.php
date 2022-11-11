@@ -19,9 +19,9 @@
                 @csrf 
         <div class="auto-container">
             <!--Default Links-->
-            <div class="default-links">
+           <!--  <div class="default-links">
                 <div class="message-box with-icon info"><div class="icon-box"><span class="icon fa fa-info"></span></div> Have a coupon? <a href="#">Click here to enter your code</a></div>
-            </div>
+            </div> -->
             
             <!--Checkout Details-->
             <div class="checkout-form">

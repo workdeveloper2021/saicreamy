@@ -1,6 +1,6 @@
 @extends('layouts.main')
  <!--Banner Start-->
-@section('content');
+@section('content')
  
     <!--Page Title-->
     <section class="page-title" style="background-image:url(<?= url('/') ?>/images/background/34.jpg)">
@@ -42,8 +42,8 @@
                                 <td class="product-thumbnail"><a href="{{url('/product')}}/{{$product['products']['id']}}"><img src="{{ URL::to('/') }}/{{ $product['products']['image']}}" alt=""></a></td>
                                 <td class="product-name"><a href="shop-single.html">{{$product['products']['title']}}</a></td>
                                 <td class="product-price">₹{{ number_format( $product['unit_price'],2)}}</td> 
-                                <td class="product-quantity"><div class="quantity"><label>Quantity</label><input type="number" class="qty" name="qty" value="{{$product['qty']}}"> </div></td>
-                                <td class="product-subtotal"><span class="amount">₹{{ number_format($product['price'],2)}}</span></td>
+                                <td class="product-quantity"><div class="quantity"><label>Quantity</label><input type="number" class="qty cartqty qty{{$product['id']}}" proid="{{$product['id']}}" name="qty" value="{{$product['qty']}}"> </div></td>
+                                <td class="product-subtotal"><span class="amount">₹<span class="tprice{{$product['id']}}">{{ number_format($product['price'],2)}}</span></span></td>
                                 <td class="product-remove"> <a href="#" class="remove"><span class="fa fa-times"></span></a></td>
                             </tr>
                         <?php } }else{ ?>  
@@ -59,16 +59,16 @@
                     <div class="pull-left">
                         <div class="apply-coupon clearfix">
                             <div class="form-group clearfix">
-                                <input type="text" name="coupon-code" value="" placeholder="Coupon Code">
+                                <input type="text" name="coupon-code" id="coupon-code" value="" placeholder="Coupon Code">
                             </div>
                             <div class="form-group clearfix">
-                                <button type="button" class="theme-btn coupon-btn">Apply Coupon</button>
+                                <button type="button" id="coupon-btn" class="theme-btn coupon-btn">Apply Coupon</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="pull-right">
-                        <button type="button" class="theme-btn cart-btn">update cart</button>
+                        <a href="{{ url('/shop') }}" class="theme-btn cart-btn">update cart</a>
                     </div>
                 </div>
             </div>
@@ -78,8 +78,9 @@
                     <!--Totals Table-->
                     <ul class="totals-table">
                         <li><h3>Cart Totals</h3></li>
-                        <li class="clearfix"><span class="col">Subtotal</span><span class="col price">₹{{ number_format( $carttotal ,2)}}</span></li>
-                        <li class="clearfix"><span class="col">Total</span><span class="col total-price">₹{{ number_format( $carttotal ,2)}}</span></li>
+                        <li class="clearfix"><span class="col">Subtotal</span><span class="col price">₹<span id="sub_t">{{ number_format( $carttotal ,2)}}</span></span></li>
+                        <li class="clearfix"><span class="col">Discount</span><span class="col price">₹<span id="sub_d">0</span></span></li>
+                        <li class="clearfix"><span class="col">Total</span><span class="col total-price">₹<span id="pr_t">{{ number_format( $carttotal ,2)}}</span></span></li>
                         <li class="text-right" style="margin-top: 20px;"><a  href="{{ URL::to('checkout') }}" class="theme-btn proceed-btn">Proceed to Checkout</a></li>
                     </ul>
                 </div>  
@@ -87,4 +88,54 @@
         </div>
     </section>
     <!--End Cart Section-->
+@endsection
+@section('script')
+<script type="text/javascript">
+    $(document).on('blur','.cartqty',function(){
+        var pro_id = $(this).attr('proid');
+        var qty = $(this).val();
+        $.ajax({
+            url:"{{route('qtyupdate')}}",
+            type:'get',
+            data:{pro_id:pro_id,qty:qty},
+            success:function(res){
+                var obj = JSON.parse(res);
+              $('.tprice'+pro_id).html(obj.price);
+              $('#sub_t').html(obj.total);
+              $('#pr_t').html(obj.total);
+            }
+        })
+    })
+    $(document).on('change','.cartqty',function(){
+        var pro_id = $(this).attr('proid');
+        var qty = $(this).val();
+         $.ajax({
+            url:"{{route('qtyupdate')}}",
+            type:'get',
+            data:{pro_id:pro_id,qty:qty},
+            success:function(res){
+                var obj = JSON.parse(res);
+              $('.tprice'+pro_id).html(obj.price);
+              $('#sub_t').html(obj.total);
+              $('#pr_t').html(obj.total);
+            }
+        })
+  
+    })
+
+$(document).on('click','#coupon-btn',function(){
+    var code = $('#coupon-code').val();
+     var amt = "{{$carttotal}}";
+    $.ajax({
+        url:"{{route('couponapply')}}",
+        type: 'get',
+        data:{code:code,amt,amt},
+        success:function(res){
+            var obj = JSON.parse(res);
+            $('#sub_d').html(obj.discount);
+            $('#pr_t').html(obj.amount);
+        }
+    })
+})    
+</script>
 @endsection

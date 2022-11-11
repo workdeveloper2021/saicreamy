@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Otherimage;
 use App\Models\Font;
+use App\Models\Giftcard;
 use Illuminate\Http\Request;
 
 use Cookie;
@@ -145,5 +146,44 @@ class CartController extends Controller
         $cart =  Cart::with('products')->where('user_id',$user_id)->get();
        
         return view('cart-item2',compact('cart'));
+    }
+
+
+    public function qtyupdate(Request $request){        
+        $cart =  Cart::where('id',$request->pro_id)->first();
+        $price = $cart->unit_price*$request->qty;
+        Cart::where('id',$cart->id)->update(array('qty'=>$request->qty,'price'=>$price));
+        $user_id =0;
+        if(Auth::user()){
+           $user_id = Auth::user()->id;
+        }else{
+           $user_id = Cookie::get('cart');
+        }
+        $allcart =  Cart::where('user_id',$user_id)->get();
+        $carttotal = 0;
+           
+        foreach ($allcart as $key => $product) {
+           $carttotal += $product->price;
+        }
+        return json_encode(array('price'=>$price,'total'=>$carttotal));
+
+    }
+
+    public function couponapply(Request $request){
+        $code = $request->code;
+        $amt = $request->amt;
+        $giftcode = Giftcard::where('giftcode',$code)->first();
+        if($giftcode !=''){
+            if($giftcode->type =='Fixed'){
+                $discount = $giftcode->amount;
+                $amount = $amt+$discount;
+            }else{
+                $discount = ($amt*$giftcode->amount)/100;
+                $amount = $amt+$discount;
+            }
+          echo json_encode(array('discount' => number_format($discount,2),'amount' =>number_format($amount,2)));
+        }else{
+           echo 'failed'; 
+        }
     }
 }

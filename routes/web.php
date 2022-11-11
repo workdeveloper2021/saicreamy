@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\HomeController;
@@ -27,10 +28,13 @@ use App\Http\Controllers\GiftcardController;
 */
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+Route::group(['middleware' => 'auth'], function () {
+   Route::get('/myaccount', [WebController::class, 'myorder'])->name('myorder');
+});
 
 Route::get('/home', [WebController::class, 'index'])->name('home');
-Route::get('/viewdd', [WebController::class, 'viewdd'])->name('viewdd');
+// Route::get('/viewdd', [WebController::class, 'viewdd'])->name('viewdd');
 
 Route::get('/blog', [WebController::class, 'blog']);
 Route::get('/blog-single/{id}', [WebController::class, 'blogDetails']);
@@ -40,7 +44,6 @@ Route::get('/shop', [WebController::class, 'shop']);
 Route::get('/product/{id}', [WebController::class, 'product']);
 
 Route::get('/', [WebController::class, 'index'])->name('home');
-Route::get('/myorder', [WebController::class, 'myorder'])->name('myorder');
 Route::get('/inovice/{id}', [WebController::class, 'inovice'])->name('inovice');
 
 Route::get('/Lollipop', function (){ return view ('index-2'); });
@@ -65,6 +68,8 @@ Route::get('/cartstore', [CartController::class, 'store'])->name('cart.store');
 Route::get('/getcart', [CartController::class, 'getcart'])->name('getcart');
 Route::get('/getcart2', [CartController::class, 'getcart2'])->name('getcart2');
 Route::get('/deletecart', [CartController::class, 'deletecart'])->name('deletecart');
+Route::get('/qtyupdate', [CartController::class, 'qtyupdate'])->name('qtyupdate');
+Route::get('/couponapply', [CartController::class, 'couponapply'])->name('couponapply');
 
 Route::get('/deletecart/{id}', [CartController::class, 'delete_cart']);
 Route::get('state-list/', [WebController::class, 'stateList'])->name('state-list');
@@ -86,9 +91,11 @@ Route::group(['prefix' => '/admin','middleware' => 'auth'],function () {
     Route::get('product-List/', [ProductController::class, 'productList'])->name('product-list');
 
     Route::post('/orderplace', [OrderController::class, 'orderplace'])->name('orderplace');
-     Route::get('order/', [OrderController::class, 'order'])->name('order');
-   Route::get('order-List/', [OrderController::class, 'orderList'])->name('order-list');
-   Route::get('order-show/{id}', [OrderController::class, 'show'])->name('order-show');
+    Route::get('order/', [OrderController::class, 'order'])->name('order');
+    Route::get('order-List/', [OrderController::class, 'orderList'])->name('order-list');
+    Route::get('order-show/{id}', [OrderController::class, 'show'])->name('order-show');
+    Route::post('/orderstatus', [OrderController::class, 'orderstatus'])->name('orderstatus');
+   
    
     Route::resource('user', UserController::class);
    

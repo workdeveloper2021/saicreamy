@@ -16,7 +16,11 @@ use FORM;
 use URL;
 class OrderController extends Controller
 {
-   
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
     public function index(Request $request)
     {   
         $user_id =0;
@@ -55,6 +59,10 @@ class OrderController extends Controller
 
             ->editColumn('useremail', function($row) {
                 return $row->user->email ;
+            })
+
+            ->editColumn('status', function($row) {
+                return '<a class="changestatus" href="javascript:void(0);" id="'.$row->id.'" status="'.$row->status.'">'.$row->status.'</a>';
             })
 
         
@@ -97,6 +105,13 @@ class OrderController extends Controller
         \Mail::to($input['email'])->send(new \App\Mail\MyTestMail($order));
 
           return redirect('myorder')->with('success', 'Congratulation your order has been successfully placed! ');
+    }
+
+
+    public function orderstatus(Request $request){
+
+        $order = Order::where('id',$request->order_id)->update(array('status'=> $request->status));
+        return redirect()->back()->with('success', 'status change successfully! ');
     }
 
 
