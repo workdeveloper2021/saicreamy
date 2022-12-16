@@ -15,7 +15,7 @@
 
      <!--CheckOut Page-->
     <section class="checkout-page">
-         <form method="post" action="{{ route('orderplace') }}">
+         <form method="post" id="orderplace" action="{{ route('orderplace') }}">
                 @csrf 
         <div class="auto-container">
             <!--Default Links-->
@@ -37,30 +37,30 @@
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Full Name <sup>*</sup></div>
-                                    <input type="text" name="s_fname" class="form-control form-control-lg" placeholder="First name" <?php if (Auth::user()): ?> value="{{Auth::user()->name}}" <?php endif ?> required>
+                                    <input type="text" name="s_fname" id="s_fname" class="form-control form-control-lg" placeholder="First name" <?php if (Auth::user()): ?> value="{{Auth::user()->name}}" <?php endif ?> required>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Company name (optional)</div>
-                                     <input type="text" name="s_cumpany" class="form-control form-control-lg" placeholder="Company (optional)">
+                                     <input type="text" name="s_cumpany" id="s_cumpany" class="form-control form-control-lg" placeholder="Company (optional)">
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Street address <sup>*</sup></div>
-                                     <input type="text" name="address" class="form-control form-control-lg" placeholder="Apartment, suite, etc. (optional)" required>
+                                     <input type="text" name="address" id="address" class="form-control form-control-lg" placeholder="Apartment, suite, etc. (optional)" required>
                                 </div>
 
                                 <div class="form-group">
-                                      <input type="text" name="address2" class="form-control form-control-lg" placeholder="Apartment, suite, etc. (optional)">
+                                      <input type="text" name="address2" id="address2" class="form-control form-control-lg" placeholder="Apartment, suite, etc. (optional)">
                                 </div>
                                  <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Country <sup>*</sup></div>
-                                    <input type="text" name="country"  placeholder="" required="" value="India" readonly>
+                                    <input type="text" name="country" readonly  placeholder="" required="" value="India" readonly>
                                 </div>
                                 <div class="form-group">
                                     <div class="field-label">State <sup>*</sup></div>
-                                      <select class="form-control-lg" name="state" id="states" style="width: 100%;" required>
+                                      <select class="form-control-lg"  name="state" id="states" style="width: 100%;" required>
                                             @if($states)
                                             @foreach($states as $value)    
                                                 <option <?php if ($value->id==21): ?>selected<?php endif ?>  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -89,13 +89,13 @@
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Phone<sup>*</sup></div>
-                                    <input type="text" name="contact" <?php if (Auth::user()): ?> value="{{Auth::user()->contact}}" <?php endif ?> placeholder="" required>
+                                    <input type="text" name="contact" <?php if (Auth::user()): ?> value="{{Auth::user()->contact}}" <?php endif ?> id="contact" placeholder="" required>
                                 </div>
 
                                 <!--Form Group-->
                                 <div class="form-group">
                                     <div class="field-label">Email Address</div>
-                                    <input type="text" name="email" <?php if (Auth::user()): ?> value="{{Auth::user()->email}}" <?php endif ?> placeholder="">
+                                    <input type="text" name="email" id="email" <?php if (Auth::user()): ?> value="{{Auth::user()->email}}" <?php endif ?> placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -182,8 +182,19 @@
                             
                             <li>
                                 <div class="radio-option">
-                                    <input type="radio" name="payment_mode" value="Cash On Delivery" id="payment-3" checked>
-                                    <label for="payment-3"><strong>Cash on Delivery</strong><span class="small-text">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</span></label>
+                                    <input type="radio" name="payment_mode" value="cod" id="payment-3" checked>
+                                    <label for="payment-3"><strong>Cash on Delivery</strong></label>
+
+                                   
+                                </div>
+
+                                 <div class="radio-option">
+                                    <input type="radio" name="payment_mode" value="online" id="online-payment" checked>
+                                      <label for="payment-3"><strong>Online Payment</strong></label>
+                                    <input type="hidden" name="transaction_id" id="razorpay_payment_id">
+                                  
+                                   <input type="hidden"  id="payableamoutn" value="{{$carttotal}}">
+                                   
                                 </div>
                             </li>
                         </ul>
@@ -191,7 +202,7 @@
                     </div>
                 </div>
                 <div class="lower-box">
-                    <button type="submit" class="theme-btn"><span class="btn-title">Place Order</span></button>
+                    <button type="button" id="buy_now" class="theme-btn"><span class="btn-title">Place Order</span></button>
                 </div>
             </div>
             <!--End Payment Box-->
@@ -204,6 +215,7 @@
 
 @section('script')
 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     $('#states').trigger('change');
@@ -227,7 +239,7 @@ $(document).on('change','#states',function(e){
                     } else {
                         $("#city").append('<option value="">Select City</option>');
                     }
-                    getCityFn();
+                    // getCityFn();
                 },
                 error: function (error) {
                     console.log(error);
@@ -235,5 +247,100 @@ $(document).on('change','#states',function(e){
             });
     })    
 </script>
+<script>
+var SITEURL = '{{URL::to('')}}';
+$.ajaxSetup({
+headers: {
+'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+$(document).on('click','#buy_now',function(){
+// orderplace
+    var mod = $('input[name="payment_mode"]:checked').val();
+    
+    if (mod =='online') {
+        var totalAmount = $('#payableamoutn').val();
+        var s_fname = $('#s_fname').val();
+        var address = $('#address').val();
+        var city = $('#city').val();
+        var pincode = $('#pincode').val();
+        var contact = $('#contact').val();
+        var email = $('#email').val();
+       if(s_fname == ''){
+         toastr.options =
+          {
+            "closeButton" : true,
+            "progressBar" : true
+          }
+         toastr.error("Please Enter Full Name");
+       }else if(address == ''){
+         toastr.options =
+          {
+            "closeButton" : true,
+            "progressBar" : true
+          }
+         toastr.error("Please Enter Address");   
+       }else if(city == ''){
+          toastr.options =
+          {
+            "closeButton" : true,
+            "progressBar" : true
+          }
+         toastr.error("Please Select City");    
+       }else if(pincode == ''){
+        toastr.options =
+          {
+            "closeButton" : true,
+            "progressBar" : true
+          }
+         toastr.error("Please Enter Pincode");
+       }else if(contact == ''){
+         toastr.options =
+          {
+            "closeButton" : true,
+            "progressBar" : true
+          }
+         toastr.error("Please Enter Contact");
+       }else if(email == ''){
+            
+            alert('Please Enter Email'); 
+       }else{
+            var options = {
+            "key": "rzp_test_6mKFfpGT9PzooU",
+            "amount": (totalAmount*100), // 2000 paise = INR 20
+            "name": "saicreamy",
+            "description": "Payment",
+            "image":  SITEURL +'/images/logo.png',
+            "handler": function (response){
+            
+               $('#razorpay_payment_id').val(response.razorpay_payment_id);
+               $('#orderplace').submit();
+            },
+            "prefill": {
+            "contact": '9988665544',
+            "email":   'tutsmake@gmail.com',
+            },
+            "theme": {
+            "color": "#528FF0"
+            }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+       }   
+       
 
+    }else if (mod =='cod'){
+        $('#orderplace').submit();
+    }
+
+
+
+}) 
+
+/*document.getElementsClass('buy_plan1').onclick = function(e){
+rzp1.open();
+e.preventDefault();
+}*/
+</script>
 @endsection

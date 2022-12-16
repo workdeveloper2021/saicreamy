@@ -14,6 +14,9 @@ use Cookie;
 use Auth;
 use FORM;
 use URL;
+use Razorpay\Api\Api;
+use Session;
+use Exception;
 class OrderController extends Controller
 {
     public function __construct()
@@ -102,9 +105,11 @@ class OrderController extends Controller
         
          $order = Order::with('user')->with('order_products')->where('id',$order->id)->first();
        
-        \Mail::to($input['email'])->send(new \App\Mail\MyTestMail($order));
+         \Mail::to($input['email'])->send(new \App\Mail\MyTestMail($order));
 
-          return redirect('myorder')->with('success', 'Congratulation your order has been successfully placed! ');
+      
+         return redirect('myaccount')->with('success', 'Congratulation your order has been successfully placed! ');
+       
     }
 
 
@@ -114,6 +119,7 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'status change successfully! ');
     }
 
+   
 
    
 }

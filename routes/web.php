@@ -78,6 +78,8 @@ Route::get('city-list/', [WebController::class, 'cityList'])->name('city-list');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::resource('review', ReviewController::class);
 
+
+
 Route::group(['prefix' => '/admin','middleware' => 'auth'],function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
    
@@ -95,6 +97,8 @@ Route::group(['prefix' => '/admin','middleware' => 'auth'],function () {
     Route::get('order-List/', [OrderController::class, 'orderList'])->name('order-list');
     Route::get('order-show/{id}', [OrderController::class, 'show'])->name('order-show');
     Route::post('/orderstatus', [OrderController::class, 'orderstatus'])->name('orderstatus');
+
+    
    
    
     Route::resource('user', UserController::class);
