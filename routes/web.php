@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/home', [WebController::class, 'index'])->name('home');
 // Route::get('/viewdd', [WebController::class, 'viewdd'])->name('viewdd');
 
+Route::get('/thanks', [WebController::class, 'thanks'])->name('thanks');
 Route::get('/blog', [WebController::class, 'blog']);
 Route::get('/blog-single/{id}', [WebController::class, 'blogDetails']);
 

@@ -108,7 +108,7 @@ class OrderController extends Controller
          \Mail::to($input['email'])->send(new \App\Mail\MyTestMail($order));
 
       
-         return redirect('myaccount')->with('success', 'Congratulation your order has been successfully placed! ');
+         return redirect('thanks')->with('success', 'Congratulation your order has been successfully placed! ');
        
     }
 

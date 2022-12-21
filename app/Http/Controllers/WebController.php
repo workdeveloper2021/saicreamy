@@ -235,4 +235,9 @@ class WebController extends Controller
         $order = Order::with('user')->with('order_products')->where('id',3)->first();
         return view('emails.myTestMail',compact('order'));
     }
+
+
+    public function thanks(){
+        return view('thanks');
+    }
 }
