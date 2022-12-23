@@ -103,6 +103,8 @@ class OrderController extends Controller
             }
          }
         
+           $request->session()->put('giftcode',  '');
+           $request->session()->put('discount',  0);
          $order = Order::with('user')->with('order_products')->where('id',$order->id)->first();
        
          \Mail::to($input['email'])->send(new \App\Mail\MyTestMail($order));

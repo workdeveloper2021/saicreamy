@@ -150,11 +150,15 @@
                     <tfoot>
                         <tr class="cart-subtotal">
                             <th>Subtotal</th>
-                            <td><span class="amount">${{ number_format( $carttotal ,2)}}</span></td>
+                            <td><span class="amount">₹{{ number_format( $carttotal ,2)}}</span></td>
+                        </tr>
+                        <tr class="cart-subtotal">
+                            <th>Discount</th>
+                            <td><span class="amount">₹{{number_format(session('discount'),2)}}</span></td>
                         </tr>
                         <tr class="order-total">
                             <th>Total</th>
-                            <td><strong class="amount">${{ number_format( $carttotal ,2)}}</strong> </td>
+                            <td><strong class="amount">${{ number_format( $carttotal-session('discount') ,2)}}</strong> </td>
                         </tr>
                     </tfoot>
                 </table>
@@ -191,9 +195,11 @@
                                  <div class="radio-option">
                                     <input type="radio" name="payment_mode" value="online" id="online-payment" checked>
                                       <label for="payment-3"><strong>Online Payment</strong></label>
-                                    <input type="hidden" name="transaction_id" id="razorpay_payment_id">
-                                  
-                                   <input type="hidden"  id="payableamoutn" value="{{$carttotal}}">
+                                    <input type="hidden" name="transaction_id" id="razorpay_payment_id"> 
+                                     <input type="hidden" name="coupon_id" value="{{session('giftcode')}}">
+                                     <input type="hidden" name="discount" value="{{session('discount')}}">
+                                     <?php $tot = $carttotal-session('discount'); ?>
+                                   <input type="hidden"  id="payableamoutn" value="{{$tot}}">
                                    
                                 </div>
                             </li>
@@ -260,6 +266,7 @@ $(document).on('click','#buy_now',function(){
     
     if (mod =='online') {
         var totalAmount = $('#payableamoutn').val();
+
         var s_fname = $('#s_fname').val();
         var address = $('#address').val();
         var city = $('#city').val();
@@ -307,7 +314,7 @@ $(document).on('click','#buy_now',function(){
        }else{
             var options = {
             "key": "rzp_test_6mKFfpGT9PzooU",
-            "amount": (totalAmount*100), // 2000 paise = INR 20
+            "amount": parseInt(totalAmount)*100, // 2000 paise = INR 20
             "name": "saicreamy",
             "description": "Payment",
             "image":  SITEURL +'/images/logo.png',

@@ -47,6 +47,12 @@
             </a>
         </li>
          <li>
+            <a href="{{ URL::to('admin/settings') }}" class="waves-effect">
+                <i class="bx bx-task"></i>
+                <span key="t-chat">Settings</span>
+            </a>
+        </li>
+         <li>
             <a class="waves-effect" href="{{ route('logout') }}"
                onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">

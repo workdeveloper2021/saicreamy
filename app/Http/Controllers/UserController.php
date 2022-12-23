@@ -17,7 +17,7 @@ class UserController extends Controller
     }
 
      public function userList() {
-        $industry = User::where('status',1)->get();
+        $industry = User::where('status',1)->where('type','!=','admin')->get();
         return datatables()->of($industry)
             ->editColumn('created_at', '{{ date("d-m-Y", strtotime($created_at)) }}')
             ->editColumn('status', function($row) {
@@ -66,6 +66,11 @@ class UserController extends Controller
         User::where('id',$id)->delete();
         return redirect()->route('user.index')
             ->with('success', 'User deleted successfully.');
+    }
+
+    public function settings(){
+         $post = User::find(1);
+        return view('admin.user.settings',compact('post'));
     }
 
 }

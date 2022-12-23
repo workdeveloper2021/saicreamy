@@ -345,21 +345,26 @@ footer {
             <td data-label="Type" class="tableitem">{{$key+1}}</td>
             <td data-label="Description" class="tableitem">{{ DB::table('products')->where('id',$pro->product_id)->value('title')}}</td>
             <td data-label="Quantity" class="tableitem">{{$pro->qty}}</td>
-            <td data-label="Unit Price" class="tableitem">₹{{$pro->unit_price}}</td>
-            <td data-label="Total" class="tableitem">₹{{$pro->price}}</td>
+            <td data-label="Unit Price" class="tableitem">Rs.{{$pro->unit_price}}</td>
+            <td data-label="Total" class="tableitem">Rs.{{$pro->price}}</td>
           </tr>
           @endforeach
           @endif
             <tr class="list-item total-row">
                 <th colspan="3" class="tableitem"></th>
                 <th class="tableitem">Sub Total</th>
-                <td data-label="Grand Total" class="tableitem">₹{{number_format($carttotal,2)}}</td>
+                <td data-label="Grand Total" class="tableitem">Rs.{{number_format($carttotal,2)}}</td>
+            </tr>
+            <tr class="list-item total-row">
+                <th colspan="3" class="tableitem"></th>
+                <th class="tableitem">Discount</th>
+                <td data-label="Grand Total" class="tableitem">Rs.{{number_format($order->discount,2)}}</td>
             </tr>
             <tr class="list-item total-row">
 
                 <th colspan="3" class="tableitem"></th>
                 <th class="tableitem">Grand Total</th>
-                <td data-label="Grand Total" class="tableitem">₹{{number_format($carttotal,2)}}</td>
+                <td data-label="Grand Total" class="tableitem">Rs.{{number_format($carttotal-$order->discount,2)}}</td>
             </tr>
         </table>
       </div><!--End Table-->

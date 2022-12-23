@@ -9,6 +9,7 @@ use App\Models\Font;
 use App\Models\Giftcard;
 use Illuminate\Http\Request;
 
+use Session;
 use Cookie;
 use Auth;
 use FORM;
@@ -39,6 +40,9 @@ class CartController extends Controller
         // return $user_id;
         $cart =  Cart::with('products')->where('user_id',$user_id)->get();
         $countries = DB::table('countries')->get();
+
+        $request->session()->put('giftcode',  '');
+        $request->session()->put('discount',  0);
         return view('shopping-cart',compact('countries','cart'));
     }
 
@@ -174,16 +178,27 @@ class CartController extends Controller
         $amt = $request->amt;
         $giftcode = Giftcard::where('giftcode',$code)->first();
         if($giftcode !=''){
+           if($giftcode->amount <= $amt){
+
             if($giftcode->type =='Fixed'){
                 $discount = $giftcode->amount;
-                $amount = $amt+$discount;
+                $amount = $amt-$discount;
             }else{
                 $discount = ($amt*$giftcode->amount)/100;
-                $amount = $amt+$discount;
+                $amount = $amt-$discount;
             }
-          echo json_encode(array('discount' => number_format($discount,2),'amount' =>number_format($amount,2)));
+           $request->session()->put('giftcode',  $code);
+           $request->session()->put('discount',  $discount);
+           echo json_encode(array('message'=>'success','discount' => number_format($discount,2),'amount' =>number_format($amount,2)));
+           }else{
+           $request->session()->put('giftcode',  '');
+           $request->session()->put('discount',  0);
+           echo json_encode(array('message'=>'failed','discount' => 0,'amount' =>number_format($amt,2)));
+           }
         }else{
-           echo 'failed'; 
+           $request->session()->put('giftcode',  '');
+           $request->session()->put('discount',  0); 
+           echo json_encode(array('message'=>'failed','discount' => 0,'amount' =>number_format($amt,2)));
         }
     }
 }

@@ -64,6 +64,9 @@
                             <div class="form-group clearfix">
                                 <button type="button" id="coupon-btn" class="theme-btn coupon-btn">Apply Coupon</button>
                             </div>
+                            <div class="form-group clearfix">
+                                <a type="button"  href="{{ route('cart') }}" class="theme-btn coupon-btn">Remove Coupon</a>
+                            </div>
                         </div>
                     </div>
 
@@ -132,8 +135,18 @@ $(document).on('click','#coupon-btn',function(){
         data:{code:code,amt,amt},
         success:function(res){
             var obj = JSON.parse(res);
+            if(obj.message == 'success'){
             $('#sub_d').html(obj.discount);
             $('#pr_t').html(obj.amount);
+            }else{
+               toastr.options =
+                  {
+                    "closeButton" : true,
+                    "progressBar" : true
+                  }
+                 toastr.error("Coupon Code Not Valide Try Again!");
+            }
+           
         }
     })
 })    

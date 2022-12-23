@@ -103,6 +103,7 @@ Route::group(['prefix' => '/admin','middleware' => 'auth'],function () {
    
    
     Route::resource('user', UserController::class);
+    Route::get('settings/', [UserController::class, 'settings'])->name('settings');
    
     Route::get('user-List/', [UserController::class, 'userList'])->name('user-list');
     
